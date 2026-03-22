@@ -1,0 +1,301 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id                String              @id @default(uuid())
+  companyName       String
+  hederaAccountId   String              @unique
+  did               String?             @unique // did:hedera:testnet:...
+  sector            String              // SectorType enum
+  revenueRange      String              // RevenueRange enum
+  baselineEmissions Float               // tCO2e
+  emissionTier      String              // "Tier_1" | "Tier_2" | "Tier_3"
+  carbonScore       String?             // "A" | "B" | "C" | "D" | "F"
+  policyFrameworks  String[]            // Selected framework names
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  emissionsRecords  EmissionsRecord[]
+  allocations       Allocation[]
+  sellerListings    MarketplaceListing[] @relation("Seller")
+  buyerTransactions MarketplaceTransaction[] @relation("Buyer")
+  sellerTransactions MarketplaceTransaction[] @relation("TransactionSeller")
+  projections       Projection[]
+  auditReports      AuditReport[]
+  policyAlignments  PolicyAlignment[]
+  milestones        Milestone[]
+  passports         CarbonPassport[]
+  claims            VerifiableClaim[]
+  supplyChainEvents SupplyChainEvent[]
+  guardianSubmissions GuardianSubmission[]
+}
+
+model EmissionsRecord {
+  id                  String   @id @default(uuid())
+  companyId           String
+  company             Company  @relation(fields: [companyId], references: [id])
+  reportingPeriod     String   // "2025-H1"
+  totalTCO2e          Float
+  scope1TCO2e         Float
+  scope2TCO2e         Float
+  scope3TCO2e         Float
+  breakdownJson       String   // JSON string of ScopeBreakdown[]
+  standardsReference  String?  // JSON string of StandardsReference
+  calculatedAt        DateTime @default(now())
+
+  @@unique([companyId, reportingPeriod])
+}
+
+model Allocation {
+  id               String   @id @default(uuid())
+  companyId        String
+  company          Company  @relation(fields: [companyId], references: [id])
+  compliancePeriod String   // "2025"
+  allocatedAmount  Int      // CAL tokens
+  usedAmount       Int      @default(0)
+  surplus          Int      @default(0)
+  deficit          Int      @default(0)
+  status           String   @default("PENDING") // "COMPLIANT" | "NON_COMPLIANT" | "PENDING"
+  transactionId    String?  // Hedera transaction ID
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([companyId, compliancePeriod])
+}
+
+model MarketplaceListing {
+  id              String   @id @default(uuid())
+  sellerCompanyId String
+  seller          Company  @relation("Seller", fields: [sellerCompanyId], references: [id])
+  quantity        Float    // CCR amount (2 decimals)
+  pricePerCCR     Float    // HBAR
+  marketType      String   // "COMPLIANCE" | "VOLUNTARY"
+  status          String   @default("ACTIVE") // ListingStatus
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  transactions    MarketplaceTransaction[]
+}
+
+model MarketplaceTransaction {
+  id              String             @id @default(uuid())
+  listingId       String
+  listing         MarketplaceListing @relation(fields: [listingId], references: [id])
+  buyerCompanyId  String
+  buyer           Company            @relation("Buyer", fields: [buyerCompanyId], references: [id])
+  sellerCompanyId String
+  seller          Company            @relation("TransactionSeller", fields: [sellerCompanyId], references: [id])
+  quantity        Float
+  totalPrice      Float
+  transactionId   String?            // Hedera transaction ID
+  createdAt       DateTime           @default(now())
+}
+
+model Projection {
+  id                  String   @id @default(uuid())
+  companyId           String
+  company             Company  @relation(fields: [companyId], references: [id])
+  projectionPeriod    String   // "2025-H2"
+  projectedEmissions  Float    // total tCO2e
+  confidenceUpper     Float
+  confidenceLower     Float
+  complianceStatus    String   // "ON_TRACK" | "AT_RISK" | "NON_COMPLIANT"
+  resultJson          String   // Full ProjectionResult as JSON
+  generatedAt         DateTime @default(now())
+}
+
+model AuditReport {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  reportType  String   // "COMPLIANCE_REPORT"
+  format      String   // "PDF" | "CSV" | "JSON"
+  hfsFileId   String   // Hedera File Service file ID
+  anomalyCount Int     @default(0)
+  generatedAt DateTime @default(now())
+}
+
+model PolicyAlignment {
+  id              String   @id @default(uuid())
+  companyId       String
+  company         Company  @relation(fields: [companyId], references: [id])
+  frameworkName   String   // PolicyFrameworkName
+  complianceScore Int      // 0-100
+  status          String   // "COMPLIANT" | "AT_RISK" | "NON_COMPLIANT"
+  lastEvaluatedAt DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([companyId, frameworkName])
+}
+
+model Milestone {
+  id               String   @id @default(uuid())
+  companyId        String
+  company          Company  @relation(fields: [companyId], references: [id])
+  milestoneType    String   // MilestoneType
+  ccrRewardAmount  Int
+  transactionId    String?  // Hedera transaction ID
+  awardedAt        DateTime @default(now())
+
+  @@unique([companyId, milestoneType])
+}
+
+model CarbonPassport {
+  id                  String            @id @default(uuid())
+  companyId           String
+  company             Company           @relation(fields: [companyId], references: [id])
+  cpassSerial         Int               @unique
+  tokenId             String            // CPASS token ID
+  passportType        String            @default("company") // "company" | "batch" | "item"
+  batchId             String?           // For batch passports
+  itemId              String?           // For item passports
+  parentBatchSerial   Int?              // For item passports — references batch CPASS serial
+  metadataHash        String?           // Hash of metadata stored on-chain
+  passportUri         String?           // HFS file ID pointing to full metadata document
+  metadataJson        String            // Current metadata as JSON
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  stamps              ComplianceStamp[]
+  claims              VerifiableClaim[] @relation("PassportClaims")
+  batchItems          BatchItemRelation[] @relation("BatchPassport")
+  parentBatchRelation BatchItemRelation? @relation("ItemPassport")
+}
+
+model ComplianceStamp {
+  id                   String         @id @default(uuid())
+  passportId           String
+  passport             CarbonPassport @relation(fields: [passportId], references: [id])
+  cstampSerial         Int            @unique
+  regulatorId          String
+  regulatorDid         String?        // Regulator DID
+  milestoneDescription String
+  certificationDate    DateTime
+  expiryDate           DateTime
+  credentialHash       String?        // Hash of Guardian Verifiable Credential
+  createdAt            DateTime       @default(now())
+}
+
+model BatchItemRelation {
+  id                  String         @id @default(uuid())
+  batchPassportSerial Int
+  batchPassport       CarbonPassport @relation("BatchPassport", fields: [batchPassportSerial], references: [cpassSerial])
+  itemPassportSerial  Int            @unique
+  itemPassport        CarbonPassport @relation("ItemPassport", fields: [itemPassportSerial], references: [cpassSerial])
+  companyId           String
+  proportionFactor    Float          // 0-1, fraction of batch emissions
+
+  @@unique([batchPassportSerial, itemPassportSerial])
+}
+
+model VerifiableClaim {
+  id              String          @id @default(uuid())
+  companyId       String
+  company         Company         @relation(fields: [companyId], references: [id])
+  passportId      String?
+  passport        CarbonPassport? @relation("PassportClaims", fields: [passportId], references: [id])
+  claimType       String          // ClaimType enum
+  verifierId      String?
+  verifierDid     String?
+  companyDid      String?
+  credentialHash  String?
+  vclaimSerial    Int?            @unique
+  status          String          @default("PENDING") // "PENDING" | "ATTESTED" | "REJECTED" | "EXPIRED"
+  evidenceRefs    String[]        // Evidence reference strings
+  attestedAt      DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model SupplyChainEvent {
+  id                  String   @id @default(uuid())
+  eventType           String   // SupplyChainEventType
+  companyId           String
+  company             Company  @relation(fields: [companyId], references: [id])
+  companyDid          String?
+  passportSerial      Int?     // Batch or item passport serial
+  location            String
+  payload             String   // JSON string of event-specific data
+  hcsSequenceNumber   Int?
+  consensusTimestamp  String?
+  createdAt           DateTime @default(now())
+}
+
+model SectorBenchmark {
+  id                  String   @id @default(uuid())
+  sector              String   // SectorType
+  emissionTier        String   // EmissionTier
+  benchmarkEmissions  Float    // tCO2e
+  updatedAt           DateTime @updatedAt
+
+  @@unique([sector, emissionTier])
+}
+
+model StandardsRegistry {
+  id                String   @id @default(uuid())
+  standardName      String   @unique
+  version           String
+  description       String
+  applicableModules String[] // e.g., ["emissions", "passport", "guardian"]
+  createdAt         DateTime @default(now())
+}
+
+model StateCheckpoint {
+  id                     String   @id @default(uuid())
+  topicId                String
+  topicName              String   // TopicName
+  lastSequenceNumber     Int
+  lastConsensusTimestamp  String
+  reconstructedAt        DateTime @default(now())
+
+  @@unique([topicId])
+}
+
+model DIDDocument {
+  id          String     @id @default(uuid())
+  did         String     @unique // did:hedera:testnet:...
+  entityType  String     // "COMPANY" | "REGULATOR" | "VERIFIER"
+  entityId    String     // Company ID, Regulator ID, or Verifier ID
+  hfsFileId   String     // HFS file ID of DID document
+  publicKey   String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model GuardianSubmission {
+  id                  String   @id @default(uuid())
+  companyId           String
+  company             Company  @relation(fields: [companyId], references: [id])
+  companyDid          String
+  productOrBatchId    String
+  status              String   @default("PENDING") // "PENDING" | "VERIFIED" | "REJECTED"
+  credentialHash      String?
+  verifierDid         String?
+  methodologyRef      String
+  lifecycleStages     String[] // ISO 14040 stages
+  rejectionErrors     String?  // JSON string of errors
+  issuedAt            DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model PlatformConfig {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model HederaFile {
+  id               String   @id @default(uuid())
+  fileId           String   @unique
+  fileType         String   // "AUDIT_REPORT" | "DID_DOCUMENT" | "PASSPORT_METADATA"
+  associatedEntity String   // company ID, report ID, or DID
+  createdAt        DateTime @default(now())
+}
