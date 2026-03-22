@@ -1,0 +1,1336 @@
+{
+  "passports": {
+    "Fromage Blanc Nature::openfoodfacts": {
+      "compositeKey": "Fromage Blanc Nature::openfoodfacts",
+      "productName": "Fromage Blanc Nature",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 2090,
+      "productId": 1898556294,
+      "cpassSerial": 34,
+      "transactionId": "0.0.7261784@1773955046.406464836",
+      "transportTxId": null,
+      "liveTokenSerial": 6,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:17:33.111Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 1254
+        },
+        {
+          "timestamp": "2026-03-15T21:17:33.111Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 209
+        },
+        {
+          "timestamp": "2026-03-16T21:17:33.111Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 105
+        },
+        {
+          "timestamp": "2026-03-18T21:17:33.111Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 314
+        },
+        {
+          "timestamp": "2026-03-19T21:17:33.111Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 209
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:17:33.112Z"
+    },
+    "Perly::openfoodfacts": {
+      "compositeKey": "Perly::openfoodfacts",
+      "productName": "Perly",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 2210,
+      "productId": 77003594,
+      "cpassSerial": 35,
+      "transactionId": "0.0.7261784@1773955073.020092983",
+      "transportTxId": null,
+      "liveTokenSerial": 7,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:17:56.172Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 1326
+        },
+        {
+          "timestamp": "2026-03-15T21:17:56.172Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 221
+        },
+        {
+          "timestamp": "2026-03-16T21:17:56.172Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 111
+        },
+        {
+          "timestamp": "2026-03-18T21:17:56.172Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 332
+        },
+        {
+          "timestamp": "2026-03-19T21:17:56.172Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 221
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:17:56.172Z"
+    },
+    "Lait::openfoodfacts": {
+      "compositeKey": "Lait::openfoodfacts",
+      "productName": "Lait",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 1270,
+      "productId": 2360704,
+      "cpassSerial": 36,
+      "transactionId": "0.0.7261784@1773955095.632832497",
+      "transportTxId": null,
+      "liveTokenSerial": 8,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:18:18.295Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 762
+        },
+        {
+          "timestamp": "2026-03-15T21:18:18.295Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 127
+        },
+        {
+          "timestamp": "2026-03-16T21:18:18.295Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 64
+        },
+        {
+          "timestamp": "2026-03-18T21:18:18.295Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 191
+        },
+        {
+          "timestamp": "2026-03-19T21:18:18.295Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 127
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:18:18.296Z"
+    },
+    "Jben::openfoodfacts": {
+      "compositeKey": "Jben::openfoodfacts",
+      "productName": "Jben",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 5170,
+      "productId": 2301953,
+      "cpassSerial": 38,
+      "transactionId": "0.0.7261784@1773955117.200935069",
+      "transportTxId": null,
+      "liveTokenSerial": 9,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:18:40.440Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 3102
+        },
+        {
+          "timestamp": "2026-03-15T21:18:40.440Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 517
+        },
+        {
+          "timestamp": "2026-03-16T21:18:40.440Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 259
+        },
+        {
+          "timestamp": "2026-03-18T21:18:40.440Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 776
+        },
+        {
+          "timestamp": "2026-03-19T21:18:40.440Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 517
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:18:40.440Z"
+    },
+    "Prince Goût Chocolat::openfoodfacts": {
+      "compositeKey": "Prince Goût Chocolat::openfoodfacts",
+      "productName": "Prince Goût Chocolat",
+      "source": "openfoodfacts",
+      "category": "snacks",
+      "emissionsGCO2e": 3590,
+      "productId": 1324247121,
+      "cpassSerial": 40,
+      "transactionId": "0.0.7261784@1773955136.340053623",
+      "transportTxId": null,
+      "liveTokenSerial": 12,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:19:02.021Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 2154
+        },
+        {
+          "timestamp": "2026-03-15T21:19:02.021Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 359
+        },
+        {
+          "timestamp": "2026-03-16T21:19:02.021Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 180
+        },
+        {
+          "timestamp": "2026-03-18T21:19:02.021Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 539
+        },
+        {
+          "timestamp": "2026-03-19T21:19:02.021Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 359
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:19:02.021Z"
+    },
+    "uht jaouda 1L::openfoodfacts": {
+      "compositeKey": "uht jaouda 1L::openfoodfacts",
+      "productName": "uht jaouda 1L",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 1486.6862729999998,
+      "productId": 1599293342,
+      "cpassSerial": 43,
+      "transactionId": "0.0.7261784@1773955171.097819388",
+      "transportTxId": null,
+      "liveTokenSerial": 15,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:19:33.804Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 892
+        },
+        {
+          "timestamp": "2026-03-15T21:19:33.804Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 149
+        },
+        {
+          "timestamp": "2026-03-16T21:19:33.804Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 74
+        },
+        {
+          "timestamp": "2026-03-18T21:19:33.804Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 223
+        },
+        {
+          "timestamp": "2026-03-19T21:19:33.804Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 149
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:19:33.804Z"
+    },
+    "Pain De Mie Bio::openfoodfacts": {
+      "compositeKey": "Pain De Mie Bio::openfoodfacts",
+      "productName": "Pain De Mie Bio",
+      "source": "openfoodfacts",
+      "category": "plant based foods and beverages",
+      "emissionsGCO2e": 1550,
+      "productId": 1760993628,
+      "cpassSerial": 46,
+      "transactionId": "0.0.7261784@1773955188.439670770",
+      "transportTxId": null,
+      "liveTokenSerial": 18,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:19:53.835Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 930
+        },
+        {
+          "timestamp": "2026-03-15T21:19:53.835Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 155
+        },
+        {
+          "timestamp": "2026-03-16T21:19:53.835Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 78
+        },
+        {
+          "timestamp": "2026-03-18T21:19:53.835Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 233
+        },
+        {
+          "timestamp": "2026-03-19T21:19:53.835Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 155
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:19:53.836Z"
+    },
+    "Cream cheese::openfoodfacts": {
+      "compositeKey": "Cream cheese::openfoodfacts",
+      "productName": "Cream cheese",
+      "source": "openfoodfacts",
+      "category": "dairies",
+      "emissionsGCO2e": 5177.6482009,
+      "productId": 1723718229,
+      "cpassSerial": 49,
+      "transactionId": "0.0.7261784@1773955207.959721808",
+      "transportTxId": null,
+      "liveTokenSerial": 21,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:20:15.275Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 3107
+        },
+        {
+          "timestamp": "2026-03-15T21:20:15.275Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 518
+        },
+        {
+          "timestamp": "2026-03-16T21:20:15.275Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 259
+        },
+        {
+          "timestamp": "2026-03-18T21:20:15.275Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 777
+        },
+        {
+          "timestamp": "2026-03-19T21:20:15.275Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 518
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:20:15.275Z"
+    },
+    "Edelbitterschokolade Mild 90%::openfoodfacts": {
+      "compositeKey": "Edelbitterschokolade Mild 90%::openfoodfacts",
+      "productName": "Edelbitterschokolade Mild 90%",
+      "source": "openfoodfacts",
+      "category": "snacks",
+      "emissionsGCO2e": 19100,
+      "productId": 101032887,
+      "cpassSerial": 53,
+      "transactionId": "0.0.7261784@1773955231.786466586",
+      "transportTxId": null,
+      "liveTokenSerial": 25,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-14T21:20:36.108Z",
+          "location": "Farm / Factory (Origin)",
+          "event": "Produced & Packaged",
+          "carrier": "Local",
+          "emissionsGCO2e": 11460
+        },
+        {
+          "timestamp": "2026-03-15T21:20:36.108Z",
+          "location": "Regional Warehouse",
+          "event": "Shipped via truck",
+          "carrier": "DHL Freight",
+          "emissionsGCO2e": 1910
+        },
+        {
+          "timestamp": "2026-03-16T21:20:36.108Z",
+          "location": "Port of Export",
+          "event": "Loaded onto vessel",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 955
+        },
+        {
+          "timestamp": "2026-03-18T21:20:36.108Z",
+          "location": "Port of Import",
+          "event": "Cleared customs",
+          "carrier": "Maersk Line",
+          "emissionsGCO2e": 2865
+        },
+        {
+          "timestamp": "2026-03-19T21:20:36.108Z",
+          "location": "Distribution Center",
+          "event": "Last-mile delivery",
+          "carrier": "FedEx",
+          "emissionsGCO2e": 1910
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:20:36.108Z"
+    },
+    "Industrial Boiler Emissions::epa": {
+      "compositeKey": "Industrial Boiler Emissions::epa",
+      "productName": "Industrial Boiler Emissions",
+      "source": "epa",
+      "category": "industrial",
+      "emissionsGCO2e": 285000,
+      "productId": 1184561936,
+      "cpassSerial": 56,
+      "transactionId": "0.0.7261784@1773955249.905943116",
+      "transportTxId": null,
+      "liveTokenSerial": 28,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:20:55.477Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 199500
+        },
+        {
+          "timestamp": "2026-03-17T21:20:55.477Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 28500
+        },
+        {
+          "timestamp": "2026-03-18T21:20:55.477Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 28500
+        },
+        {
+          "timestamp": "2026-03-19T21:20:55.477Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 28500
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:20:55.477Z"
+    },
+    "Natural Gas Power Plant::epa": {
+      "compositeKey": "Natural Gas Power Plant::epa",
+      "productName": "Natural Gas Power Plant",
+      "source": "epa",
+      "category": "energy",
+      "emissionsGCO2e": 410000,
+      "productId": 834684498,
+      "cpassSerial": 60,
+      "transactionId": "0.0.7261784@1773955268.392504124",
+      "transportTxId": null,
+      "liveTokenSerial": 32,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:21:13.768Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 287000
+        },
+        {
+          "timestamp": "2026-03-17T21:21:13.768Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 41000
+        },
+        {
+          "timestamp": "2026-03-18T21:21:13.768Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 41000
+        },
+        {
+          "timestamp": "2026-03-19T21:21:13.768Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 41000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:21:13.768Z"
+    },
+    "Diesel Freight Truck::epa": {
+      "compositeKey": "Diesel Freight Truck::epa",
+      "productName": "Diesel Freight Truck",
+      "source": "epa",
+      "category": "transport",
+      "emissionsGCO2e": 192000,
+      "productId": 1923219292,
+      "cpassSerial": 65,
+      "transactionId": "0.0.7261784@1773955287.908098450",
+      "transportTxId": null,
+      "liveTokenSerial": 37,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:21:34.329Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 134400
+        },
+        {
+          "timestamp": "2026-03-17T21:21:34.329Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 19200
+        },
+        {
+          "timestamp": "2026-03-18T21:21:34.329Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 19200
+        },
+        {
+          "timestamp": "2026-03-19T21:21:34.329Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 19200
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:21:34.329Z"
+    },
+    "Coal-Fired Steam Generator::epa": {
+      "compositeKey": "Coal-Fired Steam Generator::epa",
+      "productName": "Coal-Fired Steam Generator",
+      "source": "epa",
+      "category": "energy",
+      "emissionsGCO2e": 820000,
+      "productId": 2093940955,
+      "cpassSerial": 70,
+      "transactionId": "0.0.7261784@1773955308.885510158",
+      "transportTxId": null,
+      "liveTokenSerial": 42,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:21:55.894Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 574000
+        },
+        {
+          "timestamp": "2026-03-17T21:21:55.894Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 82000
+        },
+        {
+          "timestamp": "2026-03-18T21:21:55.894Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 82000
+        },
+        {
+          "timestamp": "2026-03-19T21:21:55.894Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 82000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:21:55.894Z"
+    },
+    "Cement Kiln Process::epa": {
+      "compositeKey": "Cement Kiln Process::epa",
+      "productName": "Cement Kiln Process",
+      "source": "epa",
+      "category": "industrial",
+      "emissionsGCO2e": 630000,
+      "productId": 514510609,
+      "cpassSerial": 75,
+      "transactionId": "0.0.7261784@1773955329.583676068",
+      "transportTxId": null,
+      "liveTokenSerial": 47,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:22:15.603Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 441000
+        },
+        {
+          "timestamp": "2026-03-17T21:22:15.603Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 63000
+        },
+        {
+          "timestamp": "2026-03-18T21:22:15.603Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 63000
+        },
+        {
+          "timestamp": "2026-03-19T21:22:15.603Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 63000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:22:15.603Z"
+    },
+    "Urban Transit Bus Fleet::epa": {
+      "compositeKey": "Urban Transit Bus Fleet::epa",
+      "productName": "Urban Transit Bus Fleet",
+      "source": "epa",
+      "category": "transport",
+      "emissionsGCO2e": 145000,
+      "productId": 363054291,
+      "cpassSerial": 82,
+      "transactionId": "0.0.7261784@1773955351.029452317",
+      "transportTxId": null,
+      "liveTokenSerial": 54,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:22:37.617Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 101500
+        },
+        {
+          "timestamp": "2026-03-17T21:22:37.617Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 14500
+        },
+        {
+          "timestamp": "2026-03-18T21:22:37.617Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 14500
+        },
+        {
+          "timestamp": "2026-03-19T21:22:37.617Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 14500
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:22:37.617Z"
+    },
+    "Steel Mill Allocation::eu-ets": {
+      "compositeKey": "Steel Mill Allocation::eu-ets",
+      "productName": "Steel Mill Allocation",
+      "source": "eu-ets",
+      "category": "manufacturing",
+      "emissionsGCO2e": 1500000,
+      "productId": 556963567,
+      "cpassSerial": 88,
+      "transactionId": "0.0.7261784@1773955370.891428927",
+      "transportTxId": null,
+      "liveTokenSerial": 60,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:22:56.847Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 1050000
+        },
+        {
+          "timestamp": "2026-03-17T21:22:56.847Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 150000
+        },
+        {
+          "timestamp": "2026-03-18T21:22:56.847Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 150000
+        },
+        {
+          "timestamp": "2026-03-19T21:22:56.847Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 150000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:22:56.848Z"
+    },
+    "Intra-EU Short Haul Flight::eu-ets": {
+      "compositeKey": "Intra-EU Short Haul Flight::eu-ets",
+      "productName": "Intra-EU Short Haul Flight",
+      "source": "eu-ets",
+      "category": "aviation",
+      "emissionsGCO2e": 88000,
+      "productId": 2011537349,
+      "cpassSerial": 94,
+      "transactionId": "0.0.7261784@1773955391.065442916",
+      "transportTxId": null,
+      "liveTokenSerial": 66,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:23:17.162Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 61600
+        },
+        {
+          "timestamp": "2026-03-17T21:23:17.162Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 8800
+        },
+        {
+          "timestamp": "2026-03-18T21:23:17.162Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 8800
+        },
+        {
+          "timestamp": "2026-03-19T21:23:17.162Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 8800
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:23:17.162Z"
+    },
+    "Lignite Power Station::eu-ets": {
+      "compositeKey": "Lignite Power Station::eu-ets",
+      "productName": "Lignite Power Station",
+      "source": "eu-ets",
+      "category": "power-generation",
+      "emissionsGCO2e": 950000,
+      "productId": 1528438031,
+      "cpassSerial": 101,
+      "transactionId": "0.0.7261784@1773955411.190729084",
+      "transportTxId": null,
+      "liveTokenSerial": 72,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:23:33.910Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 665000
+        },
+        {
+          "timestamp": "2026-03-17T21:23:33.910Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 95000
+        },
+        {
+          "timestamp": "2026-03-18T21:23:33.910Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 95000
+        },
+        {
+          "timestamp": "2026-03-19T21:23:33.910Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 95000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:23:33.910Z"
+    },
+    "Aluminum Smelter::eu-ets": {
+      "compositeKey": "Aluminum Smelter::eu-ets",
+      "productName": "Aluminum Smelter",
+      "source": "eu-ets",
+      "category": "manufacturing",
+      "emissionsGCO2e": 720000,
+      "productId": 1037838112,
+      "cpassSerial": 108,
+      "transactionId": "0.0.7261784@1773955425.825240420",
+      "transportTxId": null,
+      "liveTokenSerial": 80,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:23:52.111Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 504000
+        },
+        {
+          "timestamp": "2026-03-17T21:23:52.111Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 72000
+        },
+        {
+          "timestamp": "2026-03-18T21:23:52.111Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 72000
+        },
+        {
+          "timestamp": "2026-03-19T21:23:52.111Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 72000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:23:52.111Z"
+    },
+    "Long Haul Cargo Flight::eu-ets": {
+      "compositeKey": "Long Haul Cargo Flight::eu-ets",
+      "productName": "Long Haul Cargo Flight",
+      "source": "eu-ets",
+      "category": "aviation",
+      "emissionsGCO2e": 340000,
+      "productId": 1778263616,
+      "cpassSerial": 115,
+      "transactionId": "0.0.7261784@1773955447.978963209",
+      "transportTxId": null,
+      "liveTokenSerial": 87,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:24:13.024Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 238000
+        },
+        {
+          "timestamp": "2026-03-17T21:24:13.024Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 34000
+        },
+        {
+          "timestamp": "2026-03-18T21:24:13.024Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 34000
+        },
+        {
+          "timestamp": "2026-03-19T21:24:13.024Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 34000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:24:13.024Z"
+    },
+    "Offshore Wind Farm Backup Gas Turbine::eu-ets": {
+      "compositeKey": "Offshore Wind Farm Backup Gas Turbine::eu-ets",
+      "productName": "Offshore Wind Farm Backup Gas Turbine",
+      "source": "eu-ets",
+      "category": "power-generation",
+      "emissionsGCO2e": 210000,
+      "productId": 1694661246,
+      "cpassSerial": 123,
+      "transactionId": "0.0.7261784@1773955469.522932565",
+      "transportTxId": null,
+      "liveTokenSerial": 95,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:24:36.321Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 147000
+        },
+        {
+          "timestamp": "2026-03-17T21:24:36.321Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 21000
+        },
+        {
+          "timestamp": "2026-03-18T21:24:36.321Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 21000
+        },
+        {
+          "timestamp": "2026-03-19T21:24:36.321Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 21000
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:24:36.321Z"
+    },
+    "Smartphone Assembly Line::manufacturer": {
+      "compositeKey": "Smartphone Assembly Line::manufacturer",
+      "productName": "Smartphone Assembly Line",
+      "source": "manufacturer",
+      "category": "electronics",
+      "emissionsGCO2e": 72000,
+      "productId": 1882464653,
+      "cpassSerial": 131,
+      "transactionId": "0.0.7261784@1773955484.057048849",
+      "transportTxId": null,
+      "liveTokenSerial": 103,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:24:51.123Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 50400
+        },
+        {
+          "timestamp": "2026-03-17T21:24:51.123Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 7200
+        },
+        {
+          "timestamp": "2026-03-18T21:24:51.123Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 7200
+        },
+        {
+          "timestamp": "2026-03-19T21:24:51.123Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 7200
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:24:51.123Z"
+    },
+    "Organic Cotton T-Shirt::manufacturer": {
+      "compositeKey": "Organic Cotton T-Shirt::manufacturer",
+      "productName": "Organic Cotton T-Shirt",
+      "source": "manufacturer",
+      "category": "textiles",
+      "emissionsGCO2e": 8500,
+      "productId": 146302173,
+      "cpassSerial": 139,
+      "transactionId": "0.0.7261784@1773955507.281963142",
+      "transportTxId": null,
+      "liveTokenSerial": 111,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:25:12.009Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 5950
+        },
+        {
+          "timestamp": "2026-03-17T21:25:12.009Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 850
+        },
+        {
+          "timestamp": "2026-03-18T21:25:12.009Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 850
+        },
+        {
+          "timestamp": "2026-03-19T21:25:12.009Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 850
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:25:12.009Z"
+    },
+    "Recycled Cardboard Box::manufacturer": {
+      "compositeKey": "Recycled Cardboard Box::manufacturer",
+      "productName": "Recycled Cardboard Box",
+      "source": "manufacturer",
+      "category": "packaging",
+      "emissionsGCO2e": 1200,
+      "productId": 374809934,
+      "cpassSerial": 147,
+      "transactionId": "0.0.7261784@1773955525.284293285",
+      "transportTxId": null,
+      "liveTokenSerial": 119,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:25:29.606Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 840
+        },
+        {
+          "timestamp": "2026-03-17T21:25:29.606Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 120
+        },
+        {
+          "timestamp": "2026-03-18T21:25:29.606Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 120
+        },
+        {
+          "timestamp": "2026-03-19T21:25:29.606Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 120
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:25:29.606Z"
+    },
+    "Laptop Motherboard Production::manufacturer": {
+      "compositeKey": "Laptop Motherboard Production::manufacturer",
+      "productName": "Laptop Motherboard Production",
+      "source": "manufacturer",
+      "category": "electronics",
+      "emissionsGCO2e": 45000,
+      "productId": 979290084,
+      "cpassSerial": 156,
+      "transactionId": "0.0.7261784@1773955540.593064282",
+      "transportTxId": null,
+      "liveTokenSerial": 129,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:25:48.003Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 31500
+        },
+        {
+          "timestamp": "2026-03-17T21:25:48.003Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 4500
+        },
+        {
+          "timestamp": "2026-03-18T21:25:48.003Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 4500
+        },
+        {
+          "timestamp": "2026-03-19T21:25:48.003Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 4500
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:25:48.003Z"
+    },
+    "Polyester Fabric Roll::manufacturer": {
+      "compositeKey": "Polyester Fabric Roll::manufacturer",
+      "productName": "Polyester Fabric Roll",
+      "source": "manufacturer",
+      "category": "textiles",
+      "emissionsGCO2e": 15000,
+      "productId": 604996417,
+      "cpassSerial": 167,
+      "transactionId": "0.0.7261784@1773955564.525518760",
+      "transportTxId": null,
+      "liveTokenSerial": 139,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:26:09.933Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 10500
+        },
+        {
+          "timestamp": "2026-03-17T21:26:09.933Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 1500
+        },
+        {
+          "timestamp": "2026-03-18T21:26:09.933Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 1500
+        },
+        {
+          "timestamp": "2026-03-19T21:26:09.933Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 1500
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:26:09.933Z"
+    },
+    "Biodegradable Shrink Wrap::manufacturer": {
+      "compositeKey": "Biodegradable Shrink Wrap::manufacturer",
+      "productName": "Biodegradable Shrink Wrap",
+      "source": "manufacturer",
+      "category": "packaging",
+      "emissionsGCO2e": 3200,
+      "productId": 1211574926,
+      "cpassSerial": 174,
+      "transactionId": "0.0.7261784@1773955584.096952189",
+      "transportTxId": null,
+      "liveTokenSerial": 146,
+      "liveTokenId": "0.0.8278529",
+      "liveTokenStage": "LIVING",
+      "shippingLog": [
+        {
+          "timestamp": "2026-03-16T21:26:29.713Z",
+          "location": "Production Facility",
+          "event": "Manufactured",
+          "carrier": "N/A",
+          "emissionsGCO2e": 2240
+        },
+        {
+          "timestamp": "2026-03-17T21:26:29.713Z",
+          "location": "Logistics Hub",
+          "event": "Consolidated shipment",
+          "carrier": "UPS Freight",
+          "emissionsGCO2e": 320
+        },
+        {
+          "timestamp": "2026-03-18T21:26:29.713Z",
+          "location": "Regional Depot",
+          "event": "In transit via rail",
+          "carrier": "DB Cargo",
+          "emissionsGCO2e": 320
+        },
+        {
+          "timestamp": "2026-03-19T21:26:29.713Z",
+          "location": "Retail Store",
+          "event": "Delivered",
+          "carrier": "Local courier",
+          "emissionsGCO2e": 320
+        }
+      ],
+      "status": "created",
+      "consumerStatus": "available",
+      "createdAt": "2026-03-19T21:26:29.713Z"
+    }
+  }
+}

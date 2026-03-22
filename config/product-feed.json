@@ -1,0 +1,220 @@
+{
+  "records": [
+    {
+      "id": "1eae66d3-f86d-42d0-b7c0-15679582361b",
+      "productName": "Fromage Blanc Nature",
+      "category": "dairies",
+      "emissionsGCO2e": 2090,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "17646989-72c9-4a3b-9836-ee184c9ec8b4",
+      "productName": "Perly",
+      "category": "dairies",
+      "emissionsGCO2e": 2210,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "80292031-9830-4645-80a0-d7c18b07b3d5",
+      "productName": "Lait",
+      "category": "dairies",
+      "emissionsGCO2e": 1270,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "32bdfe92-cdec-4ee1-8037-e6d455da8cf0",
+      "productName": "Jben",
+      "category": "dairies",
+      "emissionsGCO2e": 5170,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "46862556-cd5b-46a1-8bf8-9d1fa392e256",
+      "productName": "Prince Goût Chocolat",
+      "category": "snacks",
+      "emissionsGCO2e": 3590,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "cf0eb93b-cfef-4cf7-8e75-ee24115e1b00",
+      "productName": "uht jaouda 1L",
+      "category": "dairies",
+      "emissionsGCO2e": 1486.6862729999998,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "84c74075-6ed6-45b7-b283-22a5baf0d533",
+      "productName": "Pain De Mie Bio",
+      "category": "plant based foods and beverages",
+      "emissionsGCO2e": 1550,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "b8ee2b3e-cd00-4067-bd38-f4e7ae133173",
+      "productName": "Cream cheese",
+      "category": "dairies",
+      "emissionsGCO2e": 5177.6482009,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "c2f196de-3d02-42f7-9f94-a8aedbbb24c6",
+      "productName": "Edelbitterschokolade Mild 90%",
+      "category": "snacks",
+      "emissionsGCO2e": 19100,
+      "source": "openfoodfacts",
+      "retrievedAt": "2026-03-19T22:41:23.280Z"
+    },
+    {
+      "id": "bb7c362c-7ae1-4345-a07b-34cf75f5e024",
+      "productName": "Industrial Boiler Emissions",
+      "category": "industrial",
+      "emissionsGCO2e": 285000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "e871ee41-9796-4038-8185-0ec22559951a",
+      "productName": "Natural Gas Power Plant",
+      "category": "energy",
+      "emissionsGCO2e": 410000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "ab03d348-21f4-43a8-9528-610206e3708b",
+      "productName": "Diesel Freight Truck",
+      "category": "transport",
+      "emissionsGCO2e": 192000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "90e81635-1c4d-434f-a958-c36f91e768a7",
+      "productName": "Coal-Fired Steam Generator",
+      "category": "energy",
+      "emissionsGCO2e": 820000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "6efc665f-d4f2-4b25-a013-9b7242f72fa1",
+      "productName": "Cement Kiln Process",
+      "category": "industrial",
+      "emissionsGCO2e": 630000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "1a44e3ad-b668-4996-ba31-9a166b53fff3",
+      "productName": "Urban Transit Bus Fleet",
+      "category": "transport",
+      "emissionsGCO2e": 145000,
+      "source": "epa",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "3486abe4-1a6a-437a-8bb8-69399995569c",
+      "productName": "Steel Mill Allocation",
+      "category": "manufacturing",
+      "emissionsGCO2e": 1500000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "f5e338ed-d68d-4de9-83ee-8ace5c263368",
+      "productName": "Intra-EU Short Haul Flight",
+      "category": "aviation",
+      "emissionsGCO2e": 88000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "1c27f37a-f49c-433a-b949-13e8d8715dfb",
+      "productName": "Lignite Power Station",
+      "category": "power-generation",
+      "emissionsGCO2e": 950000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "864b7d85-5997-4c34-ac37-38f5f293a96f",
+      "productName": "Aluminum Smelter",
+      "category": "manufacturing",
+      "emissionsGCO2e": 720000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "6d288877-6901-47e3-9544-88678872155e",
+      "productName": "Long Haul Cargo Flight",
+      "category": "aviation",
+      "emissionsGCO2e": 340000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "bee39980-6ae8-4786-8896-f293f2843229",
+      "productName": "Offshore Wind Farm Backup Gas Turbine",
+      "category": "power-generation",
+      "emissionsGCO2e": 210000,
+      "source": "eu-ets",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "5342da95-31a3-4477-a936-223a25f51364",
+      "productName": "Smartphone Assembly Line",
+      "category": "electronics",
+      "emissionsGCO2e": 72000,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "8e2b49fa-7eb8-4aa4-90b9-a3b5b667161a",
+      "productName": "Organic Cotton T-Shirt",
+      "category": "textiles",
+      "emissionsGCO2e": 8500,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "3770f605-a286-46ea-8020-611c16fc8f48",
+      "productName": "Recycled Cardboard Box",
+      "category": "packaging",
+      "emissionsGCO2e": 1200,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "ae721caf-224f-4c2e-b2dd-a1eb04043ac9",
+      "productName": "Laptop Motherboard Production",
+      "category": "electronics",
+      "emissionsGCO2e": 45000,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "7fe51a3e-068f-4142-9111-d8d9ff86193a",
+      "productName": "Polyester Fabric Roll",
+      "category": "textiles",
+      "emissionsGCO2e": 15000,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    },
+    {
+      "id": "439865af-62e7-4359-87b1-5ff4f3af36e0",
+      "productName": "Biodegradable Shrink Wrap",
+      "category": "packaging",
+      "emissionsGCO2e": 3200,
+      "source": "manufacturer",
+      "retrievedAt": "2026-03-19T22:41:19.669Z"
+    }
+  ]
+}
