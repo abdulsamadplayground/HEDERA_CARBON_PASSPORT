@@ -41,6 +41,22 @@ interface Submission {
   methodologyRef: string;
   lifecycleStages: string[];
   createdAt: string;
+  verifiedEmissions?: number;
+  policyId?: string;
+  verificationMode?: string;
+  credentialHash?: string;
+}
+
+interface GuardianStatusInfo {
+  connected: boolean;
+  mode: "GUARDIAN" | "LOCAL";
+  url?: string;
+  policyId?: string;
+  policyName?: string;
+  policyStatus?: string;
+  policyTopicId?: string;
+  blockTags?: string[];
+  error?: string;
 }
 
 export default function GuardianMRV() {
@@ -56,6 +72,7 @@ export default function GuardianMRV() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [result, setResult] = useState<unknown>(null);
+  const [guardianStatus, setGuardianStatus] = useState<GuardianStatusInfo | null>(null);
 
   const companyOptions: SelectOption[] = companies.map((c) => ({
     value: c.id,
@@ -79,6 +96,14 @@ export default function GuardianMRV() {
     } catch { setSubmissions([]); }
     finally { setLoadingData(false); }
   };
+
+  // Fetch Guardian connection status on mount
+  useEffect(() => {
+    fetch("/api/guardian/status")
+      .then((r) => r.json())
+      .then((j) => { if (j.success) setGuardianStatus(j.data); })
+      .catch(() => setGuardianStatus({ connected: false, mode: "LOCAL" }));
+  }, []);
 
   useEffect(() => { if (companyId) fetchSubmissions(companyId); }, [companyId]);
 
@@ -117,11 +142,26 @@ export default function GuardianMRV() {
           <h3 style={heading}>🔬 Guardian MRV</h3>
           <p style={subtext}>Submit LCA data for ISO 14067/14040 verification</p>
         </div>
-        {view === "list" ? (
-          <button onClick={() => { setView("create"); setResult(null); }} style={createBtn}>+ New Submission</button>
-        ) : (
-          <button onClick={() => { setView("list"); setResult(null); }} style={backBtn}>← Back</button>
-        )}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          {/* Guardian connection status indicator */}
+          {guardianStatus && (
+            <div style={guardianStatus.connected ? connectedBadge : localBadge} title={
+              guardianStatus.connected
+                ? `Connected to Guardian at ${guardianStatus.url || "?"}\nPolicy: ${guardianStatus.policyName || guardianStatus.policyId || "none"} (${guardianStatus.policyStatus || "?"})\nTopic: ${guardianStatus.policyTopicId || "N/A"}`
+                : guardianStatus.error
+                  ? `Guardian unavailable: ${guardianStatus.error}`
+                  : "Using local ISO 14067/14040 policy engine"
+            }>
+              <span style={{ width: 7, height: 7, borderRadius: "50%", background: guardianStatus.connected ? "#10b981" : "#f59e0b", display: "inline-block" }} />
+              {guardianStatus.connected ? "Guardian Connected" : "Local Engine"}
+            </div>
+          )}
+          {view === "list" ? (
+            <button onClick={() => { setView("create"); setResult(null); }} style={createBtn}>+ New Submission</button>
+          ) : (
+            <button onClick={() => { setView("list"); setResult(null); }} style={backBtn}>← Back</button>
+          )}
+        </div>
       </div>
 
       <FormField label="Company" value={companyId} onChange={handleCompanyChange} options={companyOptions} required />
@@ -130,8 +170,12 @@ export default function GuardianMRV() {
         <>
           {loadingData && <p style={loadingText}>Loading submissions...</p>}
           {!loadingData && companyId && submissions.length === 0 && <p style={emptyText}>No Guardian submissions found.</p>}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
           {submissions.map((s, i) => {
             const sc = statusColor(s.status || "");
+            const modeLabel = s.verificationMode === "GUARDIAN" ? "Guardian" : "Local Engine";
+            const modeBg = s.verificationMode === "GUARDIAN" ? "#dbeafe" : "#fef3c7";
+            const modeColor = s.verificationMode === "GUARDIAN" ? "#1e40af" : "#92400e";
             return (
               <div key={s.id} style={{ ...dataCard, animationDelay: `${i * 0.08}s` }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -142,10 +186,24 @@ export default function GuardianMRV() {
                   <span>{s.methodologyRef || "N/A"}</span>
                   <span>{Array.isArray(s.lifecycleStages) ? s.lifecycleStages.length : 0} stages</span>
                 </div>
+                {s.verifiedEmissions != null && s.verifiedEmissions > 0 && (
+                  <div style={{ fontSize: "0.72rem", color: "#0c4a6e", fontWeight: 600, marginTop: "0.25rem" }}>
+                    Verified: {s.verifiedEmissions.toLocaleString(undefined, { maximumFractionDigits: 2 })} tCO2e
+                  </div>
+                )}
+                <div style={{ display: "flex", gap: 6, marginTop: "0.3rem", alignItems: "center", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "0.65rem", fontWeight: 600, background: modeBg, color: modeColor, padding: "1px 6px", borderRadius: 8 }}>{modeLabel}</span>
+                  {s.credentialHash && (
+                    <span style={{ fontSize: "0.62rem", color: "#94a3b8", fontFamily: "monospace" }} title={s.credentialHash}>
+                      {s.credentialHash.slice(0, 12)}...
+                    </span>
+                  )}
+                </div>
                 <span style={cardDate}>{new Date(s.createdAt).toLocaleDateString()}</span>
               </div>
             );
           })}
+          </div>
         </>
       )}
 
@@ -190,8 +248,23 @@ export default function GuardianMRV() {
             + Add Factor
           </button>
 
+          {/* Show which engine will be used */}
+          {guardianStatus && (
+            <div style={{
+              padding: "0.5rem 0.75rem", borderRadius: 8, fontSize: "0.78rem", marginBottom: "0.5rem",
+              background: guardianStatus.connected ? "#eff6ff" : "#fffbeb",
+              border: guardianStatus.connected ? "1px solid #bfdbfe" : "1px solid #fde68a",
+              color: guardianStatus.connected ? "#1e40af" : "#92400e",
+            }}>
+              {guardianStatus.connected
+                ? `Verification will be processed by Hedera Guardian — Policy: ${guardianStatus.policyName || guardianStatus.policyId?.slice(0, 12) || "auto"} (${guardianStatus.policyStatus || "active"})`
+                : "Verification will use the built-in ISO 14067/14040 policy engine. Set GUARDIAN_API_URL to connect to a Guardian instance."
+              }
+            </div>
+          )}
+
           <button onClick={submit} disabled={loading} style={submitBtn}>{loading ? "Verifying..." : "Submit for Verification"}</button>
-          {result !== null && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+          {result !== null && <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>Guardian MRV verification submitted. {(result as Record<string, unknown>)?.verificationMode === "GUARDIAN" ? "Verified by Hedera Guardian instance." : "Verified by local ISO 14067/14040 policy engine."} Check the Activity Log for details.</div>}
         </>
       )}
 
@@ -209,7 +282,6 @@ const chipStyle: React.CSSProperties = { padding: "0.3rem 0.65rem", borderRadius
 const chipActiveStyle: React.CSSProperties = { background: "#ede9fe", color: "#6d28d9", borderColor: "#c4b5fd" };
 const sectionHeader: React.CSSProperties = { fontSize: "0.82rem", fontWeight: 700, color: "#8b5cf6", margin: "0.75rem 0 0.5rem", padding: "0.35rem 0", borderBottomWidth: 1, borderBottomStyle: "solid" as const, borderBottomColor: "#e2e8f0" };
 const submitBtn: React.CSSProperties = { width: "100%", padding: "0.65rem", borderRadius: 10, background: "#8b5cf6", color: "#fff", fontWeight: 600, fontSize: "0.88rem", marginTop: "0.5rem", border: "none", cursor: "pointer" };
-const resultBox: React.CSSProperties = { marginTop: "1rem", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "0.75rem", fontSize: "0.75rem", color: "#475569", overflow: "auto", maxHeight: 200, fontFamily: "monospace" };
 const createBtn: React.CSSProperties = { padding: "0.4rem 0.85rem", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, background: "#8b5cf6", color: "#fff", border: "none", cursor: "pointer" };
 const backBtn: React.CSSProperties = { padding: "0.4rem 0.85rem", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, background: "#f1f5f9", color: "#475569", border: "1px solid #e2e8f0", cursor: "pointer" };
 const dataCard: React.CSSProperties = { background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "0.75rem 1rem", marginBottom: "0.5rem", animation: "fadeSlideIn 0.35s ease both" };
@@ -218,3 +290,5 @@ const cardRow: React.CSSProperties = { display: "flex", gap: "1rem", fontSize: "
 const cardDate: React.CSSProperties = { fontSize: "0.7rem", color: "#94a3b8", marginTop: "0.25rem", display: "block" };
 const loadingText: React.CSSProperties = { fontSize: "0.82rem", color: "#94a3b8", textAlign: "center", padding: "1rem 0" };
 const emptyText: React.CSSProperties = { fontSize: "0.82rem", color: "#94a3b8", textAlign: "center", padding: "1rem 0" };
+const connectedBadge: React.CSSProperties = { display: "flex", alignItems: "center", gap: 5, fontSize: "0.72rem", fontWeight: 600, color: "#065f46", background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "0.25rem 0.6rem", borderRadius: 20 };
+const localBadge: React.CSSProperties = { display: "flex", alignItems: "center", gap: 5, fontSize: "0.72rem", fontWeight: 600, color: "#92400e", background: "#fffbeb", border: "1px solid #fde68a", padding: "0.25rem 0.6rem", borderRadius: 20 };

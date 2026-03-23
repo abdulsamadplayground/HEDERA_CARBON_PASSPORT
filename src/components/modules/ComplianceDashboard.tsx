@@ -31,7 +31,8 @@ const BADGE_CRITERIA = [
 interface Claim { id: string; claimType: string; status: string; createdAt: string; attestedAt?: string; }
 interface Passport { id: string; cpassSerial: number; tokenId: string; passportType: string; createdAt: string; metadataJson?: string; }
 interface EmRec { totalTCO2e: number; scope1TCO2e: number; scope2TCO2e: number; scope3TCO2e: number; reportingPeriod: string; }
-interface GuardianSub { id: string; productOrBatchId: string; status: string; methodologyRef: string; createdAt: string; }
+interface GuardianSub { id: string; productOrBatchId: string; status: string; methodologyRef: string; createdAt: string; verifiedEmissions?: number; verificationMode?: string; credentialHash?: string; }
+interface GuardianStatusInfo { connected: boolean; mode: "GUARDIAN" | "LOCAL"; url?: string; policyId?: string; policyName?: string; policyStatus?: string; policyTopicId?: string; blockTags?: string[]; error?: string; }
 interface Props { preselectedCompanyId?: string; }
 type Section = "overview" | "claim" | "guardian" | "mint";
 
@@ -49,11 +50,19 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
   const [productId, setProductId] = useState(""); const [methodology, setMethodology] = useState("");
   const [emissionTier, setEmissionTier] = useState(""); const [baselineEm, setBaselineEm] = useState("");
   const [mintResult, setMintResult] = useState<unknown>(null);
+  const [guardianStatus, setGuardianStatus] = useState<GuardianStatusInfo | null>(null);
 
   const co: SelectOption[] = companies.map(c => ({ value: c.id, label: `${c.companyName} (${c.hederaAccountId})` }));
   const selectedCompany = companies.find(c => c.id === cid);
 
   useEffect(() => { if (preselectedCompanyId && !cid) setCid(preselectedCompanyId); }, [preselectedCompanyId]);
+
+  useEffect(() => {
+    fetch("/api/guardian/status")
+      .then((r) => r.json())
+      .then((j) => { if (j.success) setGuardianStatus(j.data); })
+      .catch(() => setGuardianStatus({ connected: false, mode: "LOCAL" }));
+  }, []);
 
   const fetchAll = async (id: string) => {
     if (!id) { setClaims([]); setPassports([]); setEmissions(null); setGuardianSubs([]); return; }
@@ -103,6 +112,16 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
         <div>
           <h3 style={hd}><ShieldCheck size={20} color="#14B8A6" /> Compliance Dashboard</h3>
           <p style={st}>Claims, Guardian MRV, and Carbon Passports</p>
+          {guardianStatus && (
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: "0.68rem", fontWeight: 600, marginTop: 4,
+              color: guardianStatus.connected ? "#065f46" : "#92400e",
+              background: guardianStatus.connected ? "#ecfdf5" : "#fffbeb",
+              border: guardianStatus.connected ? "1px solid #a7f3d0" : "1px solid #fde68a",
+              padding: "2px 8px", borderRadius: 12 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: guardianStatus.connected ? "#10b981" : "#f59e0b" }} />
+              {guardianStatus.connected ? "Guardian Connected" : "Local Engine"}
+            </div>
+          )}
         </div>
         {section === "overview" ? (
           <div style={{ display: "flex", gap: 6 }}>
@@ -120,8 +139,9 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
         {ld && <p style={lt}>Loading compliance data...</p>}
         {!ld && claims.length > 0 && (<>
           <div style={secHead}><FileCheck size={14} color="#34D399" /> Verifiable Claims ({claims.length})</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
           {claims.map((c, i) => { const sc = statusStyle(c.status || ""); return (
-            <GlassCard key={c.id} delay={i * 0.04} padding="0.75rem 1rem" hover={false} style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", marginBottom: "0.4rem" }}>
+            <GlassCard key={c.id} delay={i * 0.04} padding="0.75rem 1rem" hover={false} style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={ct}>{(c.claimType || "").replace(/_/g, " ")}</span>
                 <span style={{ fontSize: "0.7rem", fontWeight: 700, padding: "0.15rem 0.5rem", borderRadius: 8, ...sc }}>{c.status}</span>
@@ -129,11 +149,13 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
               <span style={cd}>{new Date(c.createdAt).toLocaleDateString()}{c.attestedAt ? ` · Attested ${new Date(c.attestedAt).toLocaleDateString()}` : ""}</span>
             </GlassCard>
           ); })}
+          </div>
         </>)}
         {!ld && guardianSubs.length > 0 && (<>
           <div style={secHead}><Microscope size={14} color="#A78BFA" /> Guardian MRV ({guardianSubs.length})</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
           {guardianSubs.map((g, i) => { const sc = statusStyle(g.status || ""); return (
-            <GlassCard key={g.id} delay={i * 0.04} padding="0.75rem 1rem" hover={false} style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", marginBottom: "0.4rem" }}>
+            <GlassCard key={g.id} delay={i * 0.04} padding="0.75rem 1rem" hover={false} style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={ct}>{g.productOrBatchId || "N/A"}</span>
                 <span style={{ fontSize: "0.7rem", fontWeight: 700, padding: "0.15rem 0.5rem", borderRadius: 8, ...sc }}>{g.status}</span>
@@ -141,16 +163,19 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
               <span style={cd}>{g.methodologyRef || "N/A"} · {new Date(g.createdAt).toLocaleDateString()}</span>
             </GlassCard>
           ); })}
+          </div>
         </>)}
         {!ld && passports.length > 0 && (<>
           <div style={secHead}><Stamp size={14} color="#14B8A6" /> Carbon Passports ({passports.length})</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
           {passports.map((p, i) => { const meta = parseMeta(p.metadataJson); const tier = meta?.emission_tier || ""; const badges = BADGE_CRITERIA.filter(b => b.tierReq.includes(tier)); return (
-            <GlassCard key={p.id} delay={i * 0.04} padding="0.85rem 1rem" hover={false} style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", marginBottom: "0.4rem" }}>
+            <GlassCard key={p.id} delay={i * 0.04} padding="0.85rem 1rem" hover={false} style={{ background: "#FFFFFF", border: "1px solid #E2E8F0" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={ct}>CPASS #{p.cpassSerial}</span>
                 <span style={{ fontSize: "0.66rem", fontWeight: 600, color: "#A78BFA", background: "rgba(139,92,246,0.12)", padding: "2px 8px", borderRadius: 8, border: "1px solid rgba(139,92,246,0.2)" }}>{(p.passportType || "company").toUpperCase()}</span>
               </div>
-              {meta && <div style={{ fontSize: "0.72rem", color: "#475569", marginTop: 4 }}>Score: {meta.carbon_score || "N/A"} · Tier: {(meta.emission_tier || "").replace("_", " ")} · Footprint: {(meta.carbon_footprint_total ?? 0).toLocaleString()} tCO₂e</div>}
+              {meta && <div style={{ fontSize: "0.72rem", color: "#475569", marginTop: 4 }}>Score: {meta.carbon_score || "N/A"} · Tier: {(meta.emission_tier || "").replace("_", " ")}</div>}
+              {meta && <div style={{ fontSize: "0.72rem", color: "#475569" }}>Footprint: {(meta.carbon_footprint_total ?? 0).toLocaleString()} tCO₂e</div>}
               {badges.length > 0 && <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 6 }}>{badges.map(b => <ComplianceBadge key={b.id} label={b.label} icon={b.icon} />)}</div>}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
                 <span style={cd}>{new Date(p.createdAt).toLocaleDateString()}</span>
@@ -158,6 +183,7 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
               </div>
             </GlassCard>
           ); })}
+          </div>
         </>)}
         {!ld && cid && claims.length === 0 && passports.length === 0 && guardianSubs.length === 0 && <p style={lt}>No compliance data found. Submit a claim or mint a passport to get started.</p>}
       </>)}
@@ -208,7 +234,11 @@ export default function ComplianceDashboard({ preselectedCompanyId }: Props) {
         <FormField label="Emission Tier" value={emissionTier || selectedCompany?.emissionTier || ""} onChange={setEmissionTier} options={TIER_OPTIONS} required />
         <FormField label="Baseline Emissions (tCO2e)" value={baselineEm} onChange={setBaselineEm} type="number" placeholder="e.g. 50000" required />
         <AccentButton onClick={mintPassport} disabled={loading} fullWidth size="lg" style={{ background: "linear-gradient(135deg, #8B5CF6, #7C3AED)" }}>{loading ? "Minting..." : "Mint Carbon Passport NFT"}</AccentButton>
-        {mintResult && <pre style={resultBox}>{JSON.stringify(mintResult, null, 2)}</pre>}
+        {mintResult && (
+          <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>
+            Carbon Passport minted successfully. Check the Activity Log for HashScan verification link.
+          </div>
+        )}
       </>)}
     </GlassCard>
   );
@@ -224,4 +254,3 @@ const verifyBtn: React.CSSProperties = { fontSize: "0.7rem", fontWeight: 600, co
 const summaryGrid: React.CSSProperties = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.35rem 1rem" };
 const sLabel: React.CSSProperties = { fontSize: "0.68rem", color: "#64748B", display: "block", textTransform: "uppercase" as const, letterSpacing: "0.04em" };
 const sVal: React.CSSProperties = { fontSize: "0.8rem", fontWeight: 600, color: "#0F172A", display: "block" };
-const resultBox: React.CSSProperties = { marginTop: "1rem", background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.75rem", fontSize: "0.72rem", color: "#475569", overflow: "auto", maxHeight: 200, fontFamily: "'Space Grotesk', monospace" };
