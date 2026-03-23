@@ -149,14 +149,19 @@ export async function registerCompany(
   const topicId = loadTopicId("CompanyRegistration");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompanyRegistration",
       timestamp: new Date().toISOString(),
       eventType: "COMPANY_REGISTERED",
       payload: {
         companyId: company.id,
+        companyName: input.companyName,
         companyDid: didResult.did,
+        hederaAccountId: input.hederaAccountId,
         sector: input.sector,
         tier: emissionTier,
         carbonScore,
+        baselineEmissions: input.baselineEmissions,
+        revenueRange: input.revenueRange,
       },
     });
   }

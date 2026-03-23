@@ -478,6 +478,7 @@ export async function generateReport(
   const topicId = loadTopicId("AuditReports");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "AuditReports",
       timestamp: new Date().toISOString(),
       eventType: "REPORT_GENERATED",
       payload: {

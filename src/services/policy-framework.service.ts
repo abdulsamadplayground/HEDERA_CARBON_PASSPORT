@@ -326,6 +326,7 @@ export async function evaluateAlignment(
       const topicId = loadTopicId("PolicyCompliance");
       if (topicId) {
         await submitMessage(topicId, {
+          topic: "PolicyCompliance",
           timestamp: now,
           eventType: "POLICY_AT_RISK",
           payload: {

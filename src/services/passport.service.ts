@@ -222,6 +222,7 @@ export async function mintPassport(
   const topicId = loadTopicId("CompliancePassport");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompliancePassport",
       timestamp: now,
       eventType: "PASSPORT_MINTED",
       payload: {
@@ -232,6 +233,8 @@ export async function mintPassport(
         passportType,
         metadataHash,
         carbonScore: company.carbonScore ?? "C",
+        baselineEmissions: input.baselineEmissions,
+        emissionTier: input.emissionTier,
         standardsReference,
       },
     });
@@ -320,6 +323,7 @@ export async function issueStamp(
   const topicId = loadTopicId("CompliancePassport");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompliancePassport",
       timestamp: new Date().toISOString(),
       eventType: "STAMP_ISSUED",
       payload: {
@@ -419,6 +423,7 @@ export async function updatePassportMetadata(
   const topicId = loadTopicId("CompliancePassport");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompliancePassport",
       timestamp: new Date().toISOString(),
       eventType: "PASSPORT_UPDATED",
       payload: {
@@ -590,6 +595,7 @@ export async function mintBatchPassport(
   const topicId = loadTopicId("CompliancePassport");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompliancePassport",
       timestamp: now,
       eventType: "BATCH_PASSPORT_MINTED",
       payload: {
@@ -722,6 +728,7 @@ export async function mintItemPassport(
   const topicId = loadTopicId("CompliancePassport");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompliancePassport",
       timestamp: now,
       eventType: "ITEM_PASSPORT_MINTED",
       payload: {

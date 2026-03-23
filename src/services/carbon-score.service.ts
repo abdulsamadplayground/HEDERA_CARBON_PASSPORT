@@ -308,6 +308,7 @@ export async function recalculateCompanyScore(
   const topicId = loadTopicId("CompanyRegistration");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompanyRegistration",
       timestamp: new Date().toISOString(),
       eventType: "SCORE_UPDATED",
       payload: {

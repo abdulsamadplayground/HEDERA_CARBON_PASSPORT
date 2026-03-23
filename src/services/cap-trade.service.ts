@@ -219,6 +219,7 @@ export async function allocateAllowances(
   const topicId = loadTopicId("CapAndTrade");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CapAndTrade",
       timestamp: new Date().toISOString(),
       eventType: "CAL_ALLOCATED",
       payload: {
@@ -227,6 +228,7 @@ export async function allocateAllowances(
         amount,
         compliancePeriod: input.compliancePeriod,
         emissionTier: tier,
+        transactionId: transferTxId,
       },
     });
   }

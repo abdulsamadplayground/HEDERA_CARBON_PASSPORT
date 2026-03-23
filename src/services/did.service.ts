@@ -176,6 +176,7 @@ export async function registerDID(
   const topicId = loadTopicId("CompanyRegistration");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "CompanyRegistration",
       timestamp: new Date().toISOString(),
       eventType: "DID_REGISTERED",
       payload: {

@@ -363,6 +363,7 @@ export async function generateProjection(
   const topicId = loadTopicId("Projections");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "Projections",
       timestamp: new Date().toISOString(),
       eventType: "PROJECTION_GENERATED",
       payload: {

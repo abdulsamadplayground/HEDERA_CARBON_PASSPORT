@@ -297,6 +297,7 @@ export async function checkAndDistributeRewards(
       const topicId = loadTopicId("Rewards");
       if (topicId) {
         await submitMessage(topicId, {
+          topic: "Rewards",
           timestamp: new Date().toISOString(),
           eventType: "REWARD_DISTRIBUTED",
           payload: {

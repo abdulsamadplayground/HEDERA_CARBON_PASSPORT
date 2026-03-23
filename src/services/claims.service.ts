@@ -223,6 +223,7 @@ export async function attestClaim(input: AttestClaimInput) {
   const topicId = loadTopicId("VerifiableClaims");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "VerifiableClaims",
       timestamp: new Date().toISOString(),
       eventType: "CLAIM_VERIFIED",
       payload: {

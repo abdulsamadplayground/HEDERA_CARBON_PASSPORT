@@ -78,6 +78,7 @@ export async function submitEvent(input: SubmitEventInput) {
   const topicId = loadTopicId("SupplyChain");
   if (topicId) {
     await submitMessage(topicId, {
+      topic: "SupplyChain",
       timestamp: now,
       eventType: input.eventType,
       payload: {

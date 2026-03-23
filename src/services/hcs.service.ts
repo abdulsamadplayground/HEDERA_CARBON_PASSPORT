@@ -18,6 +18,7 @@ import { setValue, getValue } from "@/lib/local-store";
  * Requirements: 12.1, 15.6, 17.1
  */
 export interface HCSMessage {
+  topic?: string;
   timestamp: string;
   eventType: string;
   payload: Record<string, unknown>;
@@ -149,6 +150,7 @@ export async function submitMessage(
   const client = await getClient();
 
   const jsonPayload = JSON.stringify({
+    topic: message.topic || topicId.toString(),
     timestamp: message.timestamp,
     eventType: message.eventType,
     payload: message.payload,
