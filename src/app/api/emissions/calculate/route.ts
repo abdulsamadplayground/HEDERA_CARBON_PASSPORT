@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
     const topicId = loadTopicId("EmissionsCalculation");
     if (topicId) {
       const txId = await submitMessage(topicId, {
+        topic: "EmissionsCalculation",
         timestamp: new Date().toISOString(),
         eventType: "EMISSIONS_CALCULATED",
         payload: {

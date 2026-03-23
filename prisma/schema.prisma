@@ -278,6 +278,9 @@ model GuardianSubmission {
   status              String   @default("PENDING") // "PENDING" | "VERIFIED" | "REJECTED"
   credentialHash      String?
   verifierDid         String?
+  verifiedEmissions   Float?   // Total verified emissions in tCO2e
+  policyId            String?  // Guardian policy ID or local policy reference
+  verificationMode    String   @default("LOCAL") // "GUARDIAN" | "LOCAL"
   methodologyRef      String
   lifecycleStages     String[] // ISO 14040 stages
   rejectionErrors     String?  // JSON string of errors

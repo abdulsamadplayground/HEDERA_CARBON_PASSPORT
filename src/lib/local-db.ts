@@ -238,6 +238,9 @@ export interface GuardianSubmission {
   status: string;
   credentialHash: string | null;
   verifierDid: string | null;
+  verifiedEmissions: number | null;
+  policyId: string | null;
+  verificationMode: string;
   methodologyRef: string;
   lifecycleStages: string[];
   rejectionErrors: string | null;

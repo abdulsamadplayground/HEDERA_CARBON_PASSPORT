@@ -10,6 +10,9 @@ export interface CompanyOption {
   emissionTier: string;
   carbonScore: string;
   did: string;
+  baselineEmissions: number;
+  policyFrameworks: string[];
+  revenueRange?: string;
 }
 
 export function useCompanies() {
