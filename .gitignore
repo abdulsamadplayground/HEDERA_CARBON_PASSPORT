@@ -50,3 +50,6 @@ next-env.d.ts
 
 # kiro specs
 .kiro/
+
+# guardian (self-hosted Docker app — cloned by setup script)
+/guardian/

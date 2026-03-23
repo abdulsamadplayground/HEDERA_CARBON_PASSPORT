@@ -105,6 +105,7 @@ The platform guides users through a 3-step workflow with smooth animated transit
 | [Supply Chain](src/components/modules/SupplyChain.tsx) | Manufacturing, shipment, warehouse, inspection, certification events | `SupplyChain.tsx` |
 | [Report Generator](src/components/modules/ReportGenerator.tsx) | Compliance reports in PDF/CSV/JSON with anomaly detection | `ReportGenerator.tsx` |
 | [Activity Log](src/components/ActivityLog.tsx) | Persistent transaction log (localStorage) with HashScan verify buttons per record | `ActivityLog.tsx` |
+| [Guardian Policies](src/components/modules/GuardianPolicies.tsx) | Manage Hedera Guardian policies, create/publish policies, enforce compliance, reward companies with CCR | `GuardianPolicies.tsx` |
 
 ### Shared Components
 
@@ -271,6 +272,10 @@ Implemented by the [Policy Framework Service](src/services/policy-framework.serv
 | GET | `/api/claims/company/[companyId]` | List claims by company | [route.ts](src/app/api/claims/company/[companyId]/route.ts) |
 | POST | `/api/guardian/verify` | Submit Guardian MRV verification | [route.ts](src/app/api/guardian/verify/route.ts) |
 | GET | `/api/guardian/credentials/[companyId]` | List Guardian submissions | [route.ts](src/app/api/guardian/credentials/[companyId]/route.ts) |
+| GET | `/api/guardian/policies` | List Guardian policies | [route.ts](src/app/api/guardian/policies/route.ts) |
+| POST | `/api/guardian/policies` | Create a new Guardian policy | [route.ts](src/app/api/guardian/policies/route.ts) |
+| PUT | `/api/guardian/policies/[policyId]/publish` | Publish a draft policy | [route.ts](src/app/api/guardian/policies/[policyId]/publish/route.ts) |
+| POST | `/api/guardian/rewards` | Reward company with CCR for policy compliance | [route.ts](src/app/api/guardian/rewards/route.ts) |
 | GET | `/api/marketplace/listings` | List active marketplace listings | [route.ts](src/app/api/marketplace/listings/route.ts) |
 | POST | `/api/marketplace/buy` | Purchase CCR credits | [route.ts](src/app/api/marketplace/buy/route.ts) |
 | POST | `/api/cap-trade/allocate` | Allocate CAL allowances | [route.ts](src/app/api/cap-trade/allocate/route.ts) |
@@ -351,6 +356,7 @@ cp .env.local.example .env.local
 | `DATABASE_URL` | No | PostgreSQL connection string |
 | `HEDERA_MIRROR_NODE_URL` | No | Mirror Node URL (defaults to testnet) |
 | `REDIS_URL` | No | Redis URL for caching |
+| `GUARDIAN_API_URL` | No | Guardian API URL (enables Guardian mode) |
 
 ### 3. Deploy Platform
 
@@ -368,11 +374,61 @@ npx next dev --turbopack
 
 Open [http://localhost:3000](http://localhost:3000) to access the dashboard.
 
-### 5. Seed Test Data (Optional)
+### 5. Set Up Hedera Guardian (Optional)
+
+Guardian provides on-chain MRV (Measurement, Reporting, Verification) through a policy workflow engine. Without Guardian, the platform uses a built-in local ISO 14067/14040 policy engine.
+
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+```powershell
+# Automated setup (Windows PowerShell)
+.\scripts\setup-guardian.ps1
+```
+
+Or manually:
+
+```bash
+# 1. Clone Guardian
+git clone --depth 1 https://github.com/hashgraph/guardian.git guardian
+
+# 2. Configure Guardian .env (in guardian/ directory)
+#    Set OPERATOR_ID and OPERATOR_KEY from your .env.local
+#    Set HEDERA_NET=testnet
+
+# 3. Start Guardian
+cd guardian
+docker compose -f deploy/docker-compose.yml --profile all up -d
+
+# 4. Wait for Guardian API at http://localhost:3000
+# 5. Create users: StandardRegistry, VVB, ProjectProponent (password: test)
+```
+
+The platform auto-detects Guardian connectivity. When Guardian is running, the Compliance Dashboard and Guardian MRV module show a green "Guardian Connected" badge. When unavailable, they fall back to the local policy engine with an amber "Local Engine" badge.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `GUARDIAN_API_URL` | — | Guardian API base URL (e.g., `http://localhost:3000/api/v1`) |
+| `GUARDIAN_SR_USERNAME` | `StandardRegistry` | Standard Registry username |
+| `GUARDIAN_SR_PASSWORD` | `test` | Standard Registry password |
+| `GUARDIAN_VVB_USERNAME` | `VVB` | Validation/Verification Body username |
+| `GUARDIAN_VVB_PASSWORD` | `test` | VVB password |
+| `GUARDIAN_USER_USERNAME` | `ProjectProponent` | Project Proponent username |
+| `GUARDIAN_USER_PASSWORD` | `test` | Project Proponent password |
+| `GUARDIAN_POLICY_MESSAGE_ID` | — | Hedera message ID to import a policy from |
+
+### 6. Seed Test Data (Optional)
 
 ```bash
 npx tsx scripts/seed.ts
 ```
+
+### 7. Regenerate Diagrams (Optional)
+
+```bash
+python scripts/generate-diagrams.py
+```
+
+Generates 8 clean architecture diagrams in `docs/diagrams/` using Graphviz. Requires `pip install graphviz` and the Graphviz binary (`dot`).
 
 ## Verifying on Hedera
 
@@ -418,7 +474,8 @@ carbon-passport-platform/
 │   │   │   ├── ReportGenerator.tsx            # Compliance report generation
 │   │   │   ├── PassportMinting.tsx            # Standalone passport minting (legacy)
 │   │   │   ├── ClaimsManager.tsx              # Standalone claims manager (legacy)
-│   │   │   └── GuardianMRV.tsx                # Standalone Guardian MRV (legacy)
+│   │   │   ├── GuardianMRV.tsx                # Standalone Guardian MRV (legacy)
+│   │   │   └── GuardianPolicies.tsx           # Guardian policy management + CCR rewards
 │   │   ├── ui/
 │   │   │   └── FormField.tsx                  # Controlled input/select with LOV dropdowns
 │   │   ├── ActivityLog.tsx                    # Persistent transaction log
@@ -482,6 +539,7 @@ carbon-passport-platform/
 | Database | PostgreSQL (Prisma ORM) / JSON fallback |
 | Validation | Zod |
 | Caching | Redis (optional) |
+| MRV Engine | Hedera Guardian (Docker, optional) |
 | Testing | Jest + ts-jest |
 
 ## Full Requirements
