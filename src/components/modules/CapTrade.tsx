@@ -102,20 +102,23 @@ export default function CapTrade() {
           <motion.div key="list" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.25 }}>
             {loadingData && <p style={statusText}>Loading allocations...</p>}
             {!loadingData && companyId && allocations.length === 0 && <p style={statusText}>No allocations found for this company.</p>}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.75rem", marginTop: "0.5rem" }}>
               {allocations.map((a, i) => {
                 const sc = statusColor(a.status || "");
                 return (
-                  <motion.div key={a.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06, duration: 0.3 }} style={dataCard}>
+                  <motion.div key={a.id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.04, duration: 0.25 }} style={dataCard}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={cardTitle}>Period {a.compliancePeriod}</span>
-                      <span style={{ fontSize: "0.72rem", fontWeight: 700, background: sc.bg, color: sc.color, padding: "0.15rem 0.5rem", borderRadius: 12, border: `1px solid ${sc.border}` }}>{a.status}</span>
+                      <span style={{ fontSize: "0.68rem", fontWeight: 700, background: sc.bg, color: sc.color, padding: "0.15rem 0.5rem", borderRadius: 12, border: `1px solid ${sc.border}` }}>{a.status}</span>
                     </div>
-                    <div style={cardRow}>
-                      <span>Allocated: {(a.allocatedAmount ?? 0).toLocaleString()} CAL</span>
+                    <div style={{ textAlign: "center", margin: "0.5rem 0" }}>
+                      <span style={{ display: "block", fontSize: "1.3rem", fontWeight: 800, color: "#0F172A", fontFamily: "'Space Grotesk', sans-serif" }}>{(a.allocatedAmount ?? 0).toLocaleString()}</span>
+                      <span style={{ fontSize: "0.65rem", color: "#94A3B8" }}>CAL Allocated</span>
+                    </div>
+                    <div style={{ ...cardRow, flexDirection: "column", gap: "0.2rem" }}>
                       <span>Used: {(a.usedAmount ?? 0).toLocaleString()}</span>
-                      {(a.surplus ?? 0) > 0 && <span style={{ color: "#10b981", display: "flex", alignItems: "center", gap: 3 }}><TrendingUp size={12} />Surplus: {a.surplus}</span>}
-                      {(a.deficit ?? 0) > 0 && <span style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: 3 }}><TrendingDown size={12} />Deficit: {a.deficit}</span>}
+                      {(a.surplus ?? 0) > 0 && <span style={{ color: "#10b981", display: "flex", alignItems: "center", gap: 3 }}><TrendingUp size={12} />Surplus: {a.surplus.toLocaleString()}</span>}
+                      {(a.deficit ?? 0) > 0 && <span style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: 3 }}><TrendingDown size={12} />Deficit: {a.deficit.toLocaleString()}</span>}
                     </div>
                     <span style={cardDate}>{new Date(a.createdAt).toLocaleDateString()}</span>
                   </motion.div>
@@ -132,7 +135,11 @@ export default function CapTrade() {
               style={{ background: "linear-gradient(135deg, #3B82F6, #2563EB)", border: "1px solid rgba(59,130,246,0.3)", boxShadow: "0 4px 12px rgba(59,130,246,0.2)", marginTop: "0.5rem" }}>
               {loading ? "Allocating..." : "Allocate CAL Tokens"}
             </AccentButton>
-            {result && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+            {result && (
+              <div style={{ marginTop: "1rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>
+                CAL tokens allocated successfully. Check the Activity Log for transaction details.
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -144,7 +151,6 @@ const headerRow: CSSProperties = { display: "flex", justifyContent: "space-betwe
 const iconBox: CSSProperties = { width: 36, height: 36, borderRadius: 10, background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 };
 const heading: CSSProperties = { fontSize: "1.05rem", fontWeight: 700, color: "#0F172A", margin: 0, fontFamily: "'Space Grotesk', sans-serif" };
 const subtext: CSSProperties = { fontSize: "0.78rem", color: "#64748B", margin: 0 };
-const resultBox: CSSProperties = { marginTop: "1rem", background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.75rem", fontSize: "0.75rem", color: "#475569", overflow: "auto", maxHeight: 200, fontFamily: "monospace" };
 const dataCard: CSSProperties = { background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.75rem 1rem" };
 const cardTitle: CSSProperties = { fontWeight: 700, fontSize: "0.88rem", color: "#0F172A" };
 const cardRow: CSSProperties = { display: "flex", gap: "1rem", fontSize: "0.75rem", color: "#64748B", marginTop: "0.35rem", flexWrap: "wrap" as const };

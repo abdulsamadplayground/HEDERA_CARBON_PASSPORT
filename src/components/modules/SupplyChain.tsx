@@ -109,9 +109,9 @@ export default function SupplyChain() {
           <motion.div key="list" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.25 }}>
             {loadingEvents && <p style={statusText}>Loading events...</p>}
             {!loadingEvents && companyId && events.length === 0 && <p style={statusText}>No supply chain events found.</p>}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.75rem", marginTop: "0.5rem" }}>
               {events.map((e, i) => (
-                <motion.div key={e.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06, duration: 0.3 }} style={dataCard}>
+                <motion.div key={e.id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.04, duration: 0.25 }} style={dataCard}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={cardTitle}>{eventIcon(e.eventType || "")} {(e.eventType || "").replace(/_/g, " ")}</span>
                     {e.passportSerial && (
@@ -140,7 +140,11 @@ export default function SupplyChain() {
               style={{ background: "linear-gradient(135deg, #14B8A6, #0D9488)", border: "1px solid rgba(20,184,166,0.3)", boxShadow: "0 4px 12px rgba(20,184,166,0.2)", marginTop: "0.5rem" }}>
               {loading ? "Submitting..." : "Submit Event"}
             </AccentButton>
-            {result && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+            {result && (
+              <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>
+                Supply chain event submitted successfully. Check the Activity Log for details.
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -153,7 +157,6 @@ const iconBox: CSSProperties = { width: 36, height: 36, borderRadius: 10, backgr
 const heading: CSSProperties = { fontSize: "1.05rem", fontWeight: 700, color: "#0F172A", margin: 0, fontFamily: "'Space Grotesk', sans-serif" };
 const subtext: CSSProperties = { fontSize: "0.78rem", color: "#64748B", margin: 0 };
 const formGrid: CSSProperties = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 1rem" };
-const resultBox: CSSProperties = { marginTop: "1rem", background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.75rem", fontSize: "0.75rem", color: "#475569", overflow: "auto", maxHeight: 200, fontFamily: "monospace" };
 const dataCard: CSSProperties = { background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.75rem 1rem" };
 const cardTitle: CSSProperties = { fontWeight: 700, fontSize: "0.88rem", color: "#0F172A" };
 const serialBadge: CSSProperties = { fontSize: "0.78rem", fontWeight: 700, color: "#06b6d4", background: "rgba(6,182,212,0.12)", padding: "0.15rem 0.5rem", borderRadius: 12, display: "inline-flex", alignItems: "center", border: "1px solid rgba(6,182,212,0.25)" };

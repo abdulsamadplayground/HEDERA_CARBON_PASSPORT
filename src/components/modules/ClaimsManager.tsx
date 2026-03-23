@@ -114,6 +114,7 @@ export default function ClaimsManager() {
         <>
           {loadingClaims && <p style={loadingText}>Loading claims...</p>}
           {!loadingClaims && companyId && claims.length === 0 && <p style={emptyText}>No claims found for this company.</p>}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
           {claims.map((c, i) => {
             const sc = statusColor(c.status || "");
             return (
@@ -126,6 +127,7 @@ export default function ClaimsManager() {
               </div>
             );
           })}
+          </div>
         </>
       )}
 
@@ -136,7 +138,7 @@ export default function ClaimsManager() {
           </div>
           <FormField label="Evidence References" value={form.evidenceRefs} onChange={(v) => setForm({ ...form, evidenceRefs: v })} placeholder="Comma-separated URLs or hashes" hint="e.g. https://evidence.example.com/report1" />
           <button onClick={submitClaim} disabled={loading} style={submitBtn}>{loading ? "Submitting..." : "Submit Claim"}</button>
-          {result && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+          {result && <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>Claim submitted successfully. Check the Activity Log for details.</div>}
         </>
       )}
 
@@ -149,7 +151,7 @@ export default function ClaimsManager() {
             <FormField label="Expiry Date" value={attestForm.expiryDate} onChange={(v) => setAttestForm({ ...attestForm, expiryDate: v })} type="datetime-local" />
           </div>
           <button onClick={attestClaim} disabled={loading} style={submitBtn}>{loading ? "Attesting..." : "Attest Claim"}</button>
-          {result && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+          {result && <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>Claim attested successfully. Check the Activity Log for HashScan verification link.</div>}
         </>
       )}
 

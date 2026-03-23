@@ -98,6 +98,7 @@ export default function PassportMinting({ preselectedCompanyId }: Props) {
       {view === "list" && (<>
         {loadingData && <p style={loadingText}>Loading passports...</p>}
         {!loadingData && companyId && passports.length === 0 && <p style={emptyText}>No passports found. Mint your first one.</p>}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
         {passports.map((p, i) => {
           const meta = parseMetadata(p.metadataJson);
           const tier = meta?.emission_tier || "";
@@ -110,7 +111,8 @@ export default function PassportMinting({ preselectedCompanyId }: Props) {
               </div>
               {meta && (
                 <div style={{ fontSize: "0.75rem", color: "#475569", marginTop: "0.35rem" }}>
-                  <div>Score: {meta.carbon_score || "N/A"} · Tier: {(meta.emission_tier || "").replace("_", " ")} · Footprint: {(meta.carbon_footprint_total ?? 0).toLocaleString()} tCO₂e</div>
+                  <div>Score: {meta.carbon_score || "N/A"} · Tier: {(meta.emission_tier || "").replace("_", " ")}</div>
+                  <div>Footprint: {(meta.carbon_footprint_total ?? 0).toLocaleString()} tCO₂e</div>
                 </div>
               )}
               {badges.length > 0 && (
@@ -122,13 +124,14 @@ export default function PassportMinting({ preselectedCompanyId }: Props) {
                 <span style={cardDate}>{new Date(p.createdAt).toLocaleDateString()}</span>
                 {p.tokenId && (
                   <a href={`https://hashscan.io/testnet/token/${p.tokenId}/${p.cpassSerial}`} target="_blank" rel="noopener noreferrer" style={verifyBtn}>
-                    🔍 Verify NFT on HashScan
+                    🔍 Verify
                   </a>
                 )}
               </div>
             </div>
           );
         })}
+        </div>
       </>)}
 
       {/* MINT VIEW — summary + form */}
@@ -175,7 +178,7 @@ export default function PassportMinting({ preselectedCompanyId }: Props) {
         <FormField label="Emission Tier" value={emissionTier || selectedCompany?.emissionTier || ""} onChange={setEmissionTier} options={TIER_OPTIONS} required />
         <FormField label="Baseline Emissions (tCO2e)" value={baselineEmissions} onChange={setBaselineEmissions} type="number" placeholder="e.g. 50000" required />
         <button onClick={mintPassport} disabled={loading} style={submitBtn}>{loading ? "Minting..." : "Mint Carbon Passport NFT"}</button>
-        {result && <pre style={resultBox}>{JSON.stringify(result, null, 2)}</pre>}
+        {result && <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>Passport minted successfully. Check the Activity Log for HashScan verification link.</div>}
       </>)}
       <style>{`@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}`}</style>
     </div>

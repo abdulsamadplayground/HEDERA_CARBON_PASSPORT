@@ -56,9 +56,9 @@ export default function ReportGenerator() {
         {loading ? "Generating..." : "Generate Report"}
       </AccentButton>
       {result && (
-        <motion.pre initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={resultBox}>
-          {JSON.stringify(result, null, 2)}
-        </motion.pre>
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: "0.75rem", padding: "0.75rem", background: "#D1FAE5", border: "1px solid #A7F3D0", borderRadius: 10, fontSize: "0.82rem", color: "#059669", fontWeight: 600 }}>
+          Report generated successfully. Check the Activity Log for details and HashScan verification link.
+        </motion.div>
       )}
     </GlassCard>
   );
