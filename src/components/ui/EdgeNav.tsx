@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Building2, Calculator, ShieldCheck,
-  ArrowLeftRight, Link2, FileBarChart, ScrollText, Menu,
+  ArrowLeftRight, Link2, FileBarChart, ScrollText, Menu, Shield,
 } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -21,6 +21,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "corporate",   icon: <Building2 size={ICON_SIZE} />,      label: "Company" },
   { id: "emissions",   icon: <Calculator size={ICON_SIZE} />,     label: "Emissions" },
   { id: "compliance",  icon: <ShieldCheck size={ICON_SIZE} />,    label: "Compliance" },
+  { id: "guardian",    icon: <Shield size={ICON_SIZE} />,         label: "Guardian" },
   { id: "trading",     icon: <ArrowLeftRight size={ICON_SIZE} />, label: "Trading" },
   { id: "supplychain", icon: <Link2 size={ICON_SIZE} />,          label: "Supply Chain" },
   { id: "reports",     icon: <FileBarChart size={ICON_SIZE} />,   label: "Reports" },

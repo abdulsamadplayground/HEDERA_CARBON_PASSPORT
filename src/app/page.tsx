@@ -9,8 +9,10 @@ import EdgeNav from "@/components/ui/EdgeNav";
 import CompanyRegistration from "@/components/modules/CompanyRegistration";
 import EmissionsCalculator from "@/components/modules/EmissionsCalculator";
 import ComplianceDashboard from "@/components/modules/ComplianceDashboard";
+import GuardianPolicies from "@/components/modules/GuardianPolicies";
 import Marketplace from "@/components/modules/Marketplace";
 import CapTrade from "@/components/modules/CapTrade";
+import TokenHoldings from "@/components/modules/TokenHoldings";
 import SupplyChain from "@/components/modules/SupplyChain";
 import ReportGenerator from "@/components/modules/ReportGenerator";
 import PlatformOverview from "@/components/modules/PlatformOverview";
@@ -57,7 +59,8 @@ export default function Home() {
       case "corporate":   return <CompanyRegistration onSuccess={onRegSuccess} />;
       case "emissions":   return <EmissionsCalculator preselectedCompanyId={lastCompanyId} onSuccess={onEmSuccess} />;
       case "compliance":  return <ComplianceDashboard preselectedCompanyId={lastCompanyId} />;
-      case "trading":     return <><Marketplace /><div style={{ marginTop: "1.5rem" }}><CapTrade /></div></>;
+      case "guardian":    return <GuardianPolicies />;
+      case "trading":     return <><TokenHoldings /><div style={{ marginTop: "1.5rem" }}><Marketplace /></div><div style={{ marginTop: "1.5rem" }}><CapTrade /></div></>;
       case "supplychain": return <SupplyChain />;
       case "reports":     return <ReportGenerator />;
       case "activity":    return <ActivityLog />;
@@ -103,7 +106,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={activeTab === "overview" ? { width: "100%" } : { maxWidth: 1000, margin: "0 auto" }}
+            style={{ width: "100%" }}
           >
             {renderContent()}
           </motion.div>
@@ -211,7 +214,7 @@ const disconnectBtn: CSSProperties = {
 const main: CSSProperties = {
   flex: 1,
   overflowY: "auto",
-  padding: "2rem 2.5rem",
+  padding: "1.5rem 1.75rem 1.5rem 2.25rem",
   minHeight: "calc(100vh - 52px)",
 };
 
