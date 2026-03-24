@@ -108,84 +108,21 @@ function HeroSection({ onNavigate }: { onNavigate?: (id: string) => void }) {
 /* ─── Hub-and-spoke radial illustration ─── */
 function HubIllustration() {
   const spokes = [
-    { angle: 0, label: "Register", icon: <Building2 size={16} color="#fff" />, color: "#10B981" },
-    { angle: 60, label: "Calculate", icon: <Calculator size={16} color="#fff" />, color: "#3B82F6" },
-    { angle: 120, label: "Verify", icon: <ShieldCheck size={16} color="#fff" />, color: "#8B5CF6" },
-    { angle: 180, label: "Mint NFT", icon: <FileCheck size={16} color="#fff" />, color: "#F59E0B" },
-    { angle: 240, label: "Trade", icon: <ArrowLeftRight size={16} color="#fff" />, color: "#EC4899" },
-    { angle: 300, label: "Comply", icon: <Globe size={16} color="#fff" />, color: "#06B6D4" },
+    { label: "Register", icon: <Building2 size={16} color="#fff" />, color: "#10B981" },
+    { label: "Calculate", icon: <Calculator size={16} color="#fff" />, color: "#3B82F6" },
+    { label: "Verify", icon: <ShieldCheck size={16} color="#fff" />, color: "#8B5CF6" },
+    { label: "Mint NFT", icon: <FileCheck size={16} color="#fff" />, color: "#F59E0B" },
+    { label: "Trade", icon: <ArrowLeftRight size={16} color="#fff" />, color: "#EC4899" },
+    { label: "Comply", icon: <Globe size={16} color="#fff" />, color: "#06B6D4" },
   ];
-
-  const R = 140; // radius from center
-  const CX = 200;
-  const CY = 200;
 
   return (
     <motion.div
-      style={illustrationShell}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Outer ring glow */}
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} viewBox="0 0 400 400">
-        <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.3" />
-          </linearGradient>
-          <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.15" />
-          </linearGradient>
-        </defs>
-
-        {/* Orbit ring */}
-        <motion.circle
-          cx={CX} cy={CY} r={R}
-          fill="none" stroke="url(#ringGrad)" strokeWidth="1.5" strokeDasharray="6 4"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
-        />
-
-        {/* Spoke lines to center */}
-        {spokes.map((s, i) => {
-          const rad = (s.angle * Math.PI) / 180;
-          const x = CX + R * Math.cos(rad);
-          const y = CY + R * Math.sin(rad);
-          return (
-            <motion.line
-              key={i}
-              x1={CX} y1={CY} x2={x} y2={y}
-              stroke="url(#spokeGrad)" strokeWidth="1" strokeDasharray="3 3"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.6 }}
-              transition={{ duration: 1, delay: 0.8 + i * 0.12 }}
-            />
-          );
-        })}
-
-        {/* Animated data particles traveling along spokes */}
-        {spokes.map((s, i) => {
-          const rad = (s.angle * Math.PI) / 180;
-          const x1 = CX;
-          const y1 = CY;
-          const x2 = CX + R * Math.cos(rad);
-          const y2 = CY + R * Math.sin(rad);
-          return (
-            <motion.circle
-              key={`particle-${i}`}
-              r="3" fill={s.color} opacity="0.7"
-              initial={{ cx: x1, cy: y1 }}
-              animate={{ cx: [x1, x2, x1], cy: [y1, y2, y1] }}
-              transition={{ duration: 3 + i * 0.4, repeat: Infinity, delay: 1.5 + i * 0.3, ease: "easeInOut" }}
-            />
-          );
-        })}
-      </svg>
-
       {/* Center hub — logo */}
       <motion.div
         style={hubCenter}
@@ -195,31 +132,28 @@ function HubIllustration() {
         <CarbonLogo size={64} />
       </motion.div>
 
-      {/* Spoke nodes */}
-      {spokes.map((s, i) => {
-        const rad = (s.angle * Math.PI) / 180;
-        const x = CX + R * Math.cos(rad);
-        const y = CY + R * Math.sin(rad);
-        return (
+      {/* Spoke nodes in a 3×2 grid below the logo */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, justifyItems: "center" }}>
+        {spokes.map((s, i) => (
           <motion.div
             key={s.label}
-            style={{ position: "absolute", left: x, top: y, transform: "translate(-50%,-50%)", zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1 + i * 0.12, type: "spring", stiffness: 200 }}
+            transition={{ duration: 0.5, delay: 0.6 + i * 0.1, type: "spring", stiffness: 200 }}
           >
             <motion.div
-              style={{ width: 38, height: 38, borderRadius: "50%", background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${s.color}40` }}
+              style={{ width: 40, height: 40, borderRadius: "50%", background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${s.color}40` }}
               whileHover={{ scale: 1.15 }}
-              animate={{ y: [0, -4, 0] }}
+              animate={{ y: [0, -3, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.3, ease: "easeInOut" }}
             >
               {s.icon}
             </motion.div>
-            <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "#475569", whiteSpace: "nowrap" }}>{s.label}</span>
+            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#475569", whiteSpace: "nowrap" }}>{s.label}</span>
           </motion.div>
-        );
-      })}
+        ))}
+      </div>
     </motion.div>
   );
 }
@@ -711,20 +645,9 @@ const ctaSecondary: CSSProperties = {
 };
 
 /* ── Illustration ── */
-const illustrationShell: CSSProperties = {
-  position: "relative",
-  width: 400,
-  height: 400,
-};
-
 const hubCenter: CSSProperties = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%,-50%)",
-  zIndex: 2,
-  width: 80,
-  height: 80,
+  width: 88,
+  height: 88,
   borderRadius: "50%",
   background: "rgba(255,255,255,0.9)",
   backdropFilter: "blur(8px)",

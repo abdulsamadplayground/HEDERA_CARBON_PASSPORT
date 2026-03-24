@@ -53,20 +53,20 @@ export default function CarbonLogo({ size = 200, style, className }: Props) {
 
       {/* Outer hexagon - blue */}
       <path
-        d="M100 15 L170 52 L170 128 L100 165 L30 128 L30 52 Z"
+        d="M100 20 L170 55 L170 145 L100 180 L30 145 L30 55 Z"
         fill="url(#hexGrad2)"
         opacity="0.9"
       />
 
       {/* Inner hexagon - emerald */}
       <path
-        d="M100 28 L158 58 L158 122 L100 152 L42 122 L42 58 Z"
+        d="M100 33 L158 63 L158 137 L100 167 L42 137 L42 63 Z"
         fill="url(#hexGrad)"
       />
 
       {/* Shine overlay */}
       <path
-        d="M100 28 L158 58 L158 90 L42 90 L42 58 Z"
+        d="M100 33 L158 63 L158 100 L42 100 L42 63 Z"
         fill="url(#shineGrad)"
         opacity="0.5"
       />
@@ -74,13 +74,13 @@ export default function CarbonLogo({ size = 200, style, className }: Props) {
       {/* Leaf shape */}
       <g filter="url(#glow)">
         <path
-          d="M100 50 C100 50 135 70 135 110 C135 135 115 145 100 150 C85 145 65 135 65 110 C65 70 100 50 100 50 Z"
+          d="M100 55 C100 55 135 75 135 115 C135 140 115 150 100 155 C85 150 65 140 65 115 C65 75 100 55 100 55 Z"
           fill="white"
           opacity="0.95"
         />
         {/* Leaf vein - center */}
         <path
-          d="M100 60 Q100 100 100 145"
+          d="M100 65 Q100 105 100 150"
           stroke="url(#leafGrad)"
           strokeWidth="2.5"
           fill="none"
@@ -88,14 +88,14 @@ export default function CarbonLogo({ size = 200, style, className }: Props) {
         />
         {/* Leaf veins - left */}
         <path
-          d="M100 80 Q85 85 75 100"
+          d="M100 85 Q85 90 75 105"
           stroke="url(#leafGrad)"
           strokeWidth="1.8"
           fill="none"
           strokeLinecap="round"
         />
         <path
-          d="M100 100 Q82 108 72 120"
+          d="M100 105 Q82 113 72 125"
           stroke="url(#leafGrad)"
           strokeWidth="1.8"
           fill="none"
@@ -103,14 +103,14 @@ export default function CarbonLogo({ size = 200, style, className }: Props) {
         />
         {/* Leaf veins - right */}
         <path
-          d="M100 80 Q115 85 125 100"
+          d="M100 85 Q115 90 125 105"
           stroke="url(#leafGrad)"
           strokeWidth="1.8"
           fill="none"
           strokeLinecap="round"
         />
         <path
-          d="M100 100 Q118 108 128 120"
+          d="M100 105 Q118 113 128 125"
           stroke="url(#leafGrad)"
           strokeWidth="1.8"
           fill="none"
@@ -119,8 +119,8 @@ export default function CarbonLogo({ size = 200, style, className }: Props) {
       </g>
 
       {/* Sparkle highlights */}
-      <circle cx="75" cy="55" r="2" fill="white" opacity="0.7" />
-      <circle cx="140" cy="75" r="1.5" fill="white" opacity="0.5" />
+      <circle cx="75" cy="60" r="2" fill="white" opacity="0.7" />
+      <circle cx="140" cy="80" r="1.5" fill="white" opacity="0.5" />
     </svg>
   );
 }
