@@ -56,10 +56,31 @@ export default function GuardianPolicies() {
     catch { setPolicies([]); } finally { setLd(false); }
   }, []);
   const fetchStatus = useCallback(async () => {
-    try { const r = await fetch("/api/guardian/status"); const j = await r.json(); if (j.success) setGs(j.data); }
-    catch { setGs({ connected: false, mode: "LOCAL" }); }
+    try { const r = await fetch("/api/guardian/status"); const j = await r.json(); if (j.success) { setGs(j.data); return j.data as GStatus; } }
+    catch { /* ignore */ }
+    const fallback: GStatus = { connected: false, mode: "LOCAL" };
+    setGs(fallback);
+    return fallback;
   }, []);
-  useEffect(() => { fetchPolicies(); fetchStatus(); }, [fetchPolicies, fetchStatus]);
+  // On mount: fetch status, then policies if connected. Auto-retry every 15s when disconnected.
+  useEffect(() => {
+    let timer: ReturnType<typeof setInterval> | null = null;
+    let mounted = true;
+    const init = async () => {
+      const s = await fetchStatus();
+      if (s?.connected) { fetchPolicies(); if (timer) { clearInterval(timer); timer = null; } }
+      else {
+        // Auto-retry connection every 15s
+        if (!timer) timer = setInterval(async () => {
+          if (!mounted) return;
+          const retry = await fetchStatus();
+          if (retry?.connected) { fetchPolicies(); if (timer) { clearInterval(timer); timer = null; } }
+        }, 15000);
+      }
+    };
+    init();
+    return () => { mounted = false; if (timer) clearInterval(timer); };
+  }, [fetchPolicies, fetchStatus]);
 
   const createPolicy = async () => {
     const r = await call<PolicyInfo>("/api/guardian/policies", { method: "POST", body: { name: pName, description: pDesc, policyTag: pTag || undefined }, txType: "Guardian Policy Creation", txDescription: `Created Guardian policy: ${pName}` });
@@ -116,7 +137,9 @@ export default function GuardianPolicies() {
           <GlassCard hover={false} style={{ textAlign: "center", padding: "2.5rem" }}>
             <Shield size={36} color="#F59E0B" style={{ margin: "0 auto 0.75rem" }} />
             <p style={{ fontSize: "0.88rem", color: "#475569", fontWeight: 600, margin: "0 0 0.25rem" }}>Guardian Not Connected</p>
-            <p style={{ fontSize: "0.78rem", color: "#94A3B8", margin: 0 }}>Set <code style={{ background: "#F1F5F9", padding: "1px 4px", borderRadius: 4 }}>GUARDIAN_API_URL</code> in your environment to connect.</p>
+            <p style={{ fontSize: "0.78rem", color: "#94A3B8", margin: "0 0 0.5rem" }}>Ensure Docker Desktop is running and Guardian containers are up.</p>
+            <p style={{ fontSize: "0.72rem", color: "#94A3B8", margin: "0 0 1rem" }}>Auto-retrying connection every 15 seconds...</p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.72rem", color: "#D97706" }}><RefreshCw size={12} className="spin" /> Waiting for Guardian...</div>
           </GlassCard>
         )}
         {!ld && policies.length > 0 && (

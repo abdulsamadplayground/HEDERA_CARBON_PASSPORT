@@ -140,7 +140,7 @@ async function guardianFetch(
   const response = await fetch(url, {
     ...fetchOpts,
     headers,
-    signal: AbortSignal.timeout(30000),
+    signal: AbortSignal.timeout(10000),
   });
 
   if (!response.ok) {
