@@ -99,13 +99,13 @@ The platform guides users through a 3-step workflow with smooth animated transit
 
 | Module | Description | Source |
 |--------|-------------|--------|
-| [Platform Overview](src/components/modules/PlatformOverview.tsx) | Expandable company list with passport dropdowns, badge display, HashScan verify buttons | `PlatformOverview.tsx` |
+| [Platform Overview](src/components/modules/PlatformOverview.tsx) | Hero section with centered CarbonLogo hub and 3×2 grid of animated service icons (Register, Calculate, Verify, Mint NFT, Trade, Comply), problem/solution sections, services grid, walkthrough timeline, and CTA | `PlatformOverview.tsx` |
 | [Marketplace](src/components/modules/Marketplace.tsx) | CCR credit listings, purchasing, compliance/voluntary market types | `Marketplace.tsx` |
 | [Cap & Trade](src/components/modules/CapTrade.tsx) | CAL allowance allocation, surplus/deficit tracking, inter-company trading | `CapTrade.tsx` |
 | [Supply Chain](src/components/modules/SupplyChain.tsx) | Manufacturing, shipment, warehouse, inspection, certification events | `SupplyChain.tsx` |
 | [Report Generator](src/components/modules/ReportGenerator.tsx) | Compliance reports in PDF/CSV/JSON with anomaly detection | `ReportGenerator.tsx` |
 | [Activity Log](src/components/ActivityLog.tsx) | Persistent transaction log (localStorage) with HashScan verify buttons per record | `ActivityLog.tsx` |
-| [Guardian Policies](src/components/modules/GuardianPolicies.tsx) | Manage Hedera Guardian policies, create/publish policies, enforce compliance, reward companies with CCR | `GuardianPolicies.tsx` |
+| [Guardian Policies](src/components/modules/GuardianPolicies.tsx) | Manage Hedera Guardian policies, create/publish policies, enforce compliance, reward companies with CCR. Auto-retries Guardian connection every 15 seconds when disconnected. | `GuardianPolicies.tsx` |
 
 ### Shared Components
 
@@ -299,7 +299,7 @@ Implemented by the [Policy Framework Service](src/services/policy-framework.serv
 | Carbon Score Service | A–F grading, benchmark comparison, CPASS metadata updates | [carbon-score.service.ts](src/services/carbon-score.service.ts) |
 | Passport Service | CPASS NFT minting, metadata management, stamp attachment | [passport.service.ts](src/services/passport.service.ts) |
 | Claims Service | Verifiable claim submission, VCLAIM NFT attestation | [claims.service.ts](src/services/claims.service.ts) |
-| Guardian MRV Service | ISO 14067/14040 LCA verification via Hedera Guardian | [guardian.service.ts](src/services/guardian.service.ts) |
+| Guardian MRV Service | ISO 14067/14040 LCA verification via Hedera Guardian. JWT session caching with auto-refresh, 401 retry logic, and 10-second API timeout for resilient connectivity. | [guardian.service.ts](src/services/guardian.service.ts) |
 | DID Service | Decentralized Identity creation and resolution | [did.service.ts](src/services/did.service.ts) |
 | Marketplace Service | CCR credit listing, purchasing, retirement | [marketplace.service.ts](src/services/marketplace.service.ts) |
 | Cap-Trade Service | CAL allocation, surplus/deficit, allowance transfers | [cap-trade.service.ts](src/services/cap-trade.service.ts) |
@@ -369,10 +369,10 @@ Creates all 6 tokens, 12 HCS topics, 3 platform accounts, compiles and deploys 6
 ### 4. Run Development Server
 
 ```bash
-npx next dev --turbopack
+npx next dev --turbopack -p 3005
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to access the dashboard.
+Open [http://localhost:3005](http://localhost:3005) to access the dashboard. Port 3005 is used because Guardian occupies port 3000.
 
 ### 5. Set Up Hedera Guardian (Optional)
 
@@ -403,7 +403,7 @@ docker compose -f deploy/docker-compose.yml --profile all up -d
 # 5. Create users: StandardRegistry, VVB, ProjectProponent (password: test)
 ```
 
-The platform auto-detects Guardian connectivity. When Guardian is running, the Compliance Dashboard and Guardian MRV module show a green "Guardian Connected" badge. When unavailable, they fall back to the local policy engine with an amber "Local Engine" badge.
+The platform auto-detects Guardian connectivity. When Guardian is running, the Compliance Dashboard and Guardian MRV module show a green "Guardian Connected" badge. When unavailable, they fall back to the local policy engine with an amber "Local Engine" badge. The Guardian Policies page auto-retries the connection every 15 seconds when Guardian is not reachable, so once Docker Desktop and the Guardian containers are up, the platform connects automatically without any manual action.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -467,7 +467,7 @@ carbon-passport-platform/
 │   │   │   ├── CompanyRegistration.tsx        # Step 1: Company list/create with Hedera ID filter
 │   │   │   ├── EmissionsCalculator.tsx        # Step 2: GHG calculation with formulas + ratings
 │   │   │   ├── ComplianceDashboard.tsx        # Step 3: Unified claims + MRV + passport minting
-│   │   │   ├── PlatformOverview.tsx           # Expandable company/passport overview
+│   │   │   ├── PlatformOverview.tsx           # Hero with centered logo hub + service icon grid, problem/solution, services, walkthrough
 │   │   │   ├── Marketplace.tsx                # CCR credit marketplace
 │   │   │   ├── CapTrade.tsx                   # Cap-and-trade allowance management
 │   │   │   ├── SupplyChain.tsx                # Supply chain event tracking
@@ -515,10 +515,11 @@ carbon-passport-platform/
 
 | Decision | Rationale |
 |----------|-----------|
-| Next.js 16 + Turbopack | Fast dev server, API routes co-located with frontend, React 19 support |
+| Next.js 16 + Turbopack | Fast dev server, API routes co-located with frontend, React 19 support. `turbopack.root` configured in `next.config.ts` to resolve workspace root correctly. |
 | Hedera SDK v2.81.0 | Native secp256k1 signing, HTS/HCS/HSCS/HFS in one SDK |
 | Pure calculation engine | [Emissions Engine](src/services/emissions-engine.service.ts) has zero side effects — testable, auditable |
 | Inline styles (CSSProperties) | No build-time CSS tooling needed, component-scoped, zero CSS conflicts |
+| Flex/Grid over absolute positioning | Hub illustration uses CSS Grid for spoke icons instead of SVG radial layout — simpler, responsive, no clipping issues |
 | localStorage for activity log | Persists across hard refreshes without backend dependency |
 | Toast notifications (not modals) | Non-blocking UX — user sees result without interrupting workflow |
 | Unified Compliance Dashboard | Replaced 3 separate components (Claims, Guardian, Passport) with single view |
