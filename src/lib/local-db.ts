@@ -80,6 +80,8 @@ export interface MarketplaceTransaction {
   sellerCompanyId: string;
   quantity: number;
   totalPrice: number;
+  hbarAmount?: number;
+  hbarTxId?: string | null;
   transactionId: string | null;
   createdAt: Date;
 }

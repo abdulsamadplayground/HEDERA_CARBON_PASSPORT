@@ -12,6 +12,8 @@ import {
   ContractId,
   TokenId,
   AccountId,
+  Hbar,
+  TransferTransaction,
 } from "@hashgraph/sdk";
 import { getClient, getOperatorId, getOperatorKey } from "@/lib/hedera/client";
 import { loadTokenId } from "@/services/hts.service";
@@ -199,9 +201,12 @@ export async function purchaseCredits(
     }
   }
 
-  // 4. CCR-only transfer: buyer pays seller in CCR tokens
+  // 4. CCR transfer + HBAR payment
   // totalPrice = quantity × pricePerCCR (all in CCR tokens)
+  // HBAR cost = totalPrice × HBAR_PER_CCR exchange rate
   const totalPrice = listing.quantity * listing.pricePerCCR;
+  const HBAR_PER_CCR = 0.5; // 1 CCR = 0.5 HBAR (demo exchange rate)
+  const hbarAmount = totalPrice * HBAR_PER_CCR;
 
   const ccrTokenId = loadTokenId("CCR");
   if (!ccrTokenId) {
@@ -215,13 +220,15 @@ export async function purchaseCredits(
   // CCR has 2 decimals — multiply by 100 for smallest unit
   const ccrPaymentAmount = Math.round(totalPrice * 100);
 
-  // For demo/testnet: the operator treasury handles the transfer on behalf of
-  // both parties. Mint the CCR payment amount first to ensure sufficient supply,
-  // then record the transaction. On mainnet this would be a direct wallet-to-wallet
-  // transfer requiring both parties to sign.
+  // Resolve buyer and seller Hedera account IDs for HBAR transfer
+  const buyerHederaId = buyer.hederaAccountId;
+  const sellerHederaId = seller.hederaAccountId;
+
   let transferTxId = `ccr-purchase-${listing.id}-${Date.now()}`;
+  let hbarTxId = "";
+
   try {
-    // Mint CCR to cover the transaction (operator is supply key holder)
+    // Step A: Mint CCR to cover the transaction (operator is supply key holder)
     const { TokenMintTransaction } = await import("@hashgraph/sdk");
     const mintTx = new TokenMintTransaction()
       .setTokenId(ccrTokenId)
@@ -232,11 +239,35 @@ export async function purchaseCredits(
     const mintResponse = await signedMint.execute(client);
     await mintResponse.getReceipt(client);
 
-    // Use the real Hedera transaction ID from the mint for audit trail
     transferTxId = mintResponse.transactionId.toString();
     console.log(
-      `[Marketplace] CCR purchase completed — ${totalPrice} CCR for ${listing.quantity} credits, txId=${transferTxId}`
+      `[Marketplace] CCR mint completed — ${totalPrice} CCR, txId=${transferTxId}`
     );
+
+    // Step B: HBAR transfer from operator treasury to seller (simulating buyer→seller payment)
+    // On testnet, the operator acts as custodian for both parties.
+    // The operator sends HBAR to the seller's account as payment for the CCR credits.
+    if (sellerHederaId && buyerHederaId) {
+      try {
+        const sellerAccountId = AccountId.fromString(sellerHederaId);
+        const hbarTransfer = new TransferTransaction()
+          .addHbarTransfer(operatorId, new Hbar(-hbarAmount))
+          .addHbarTransfer(sellerAccountId, new Hbar(hbarAmount))
+          .setTransactionMemo(`CCR Purchase: ${listing.quantity} credits @ ${listing.pricePerCCR} CCR each = ${hbarAmount} HBAR`);
+
+        const frozenHbar = await hbarTransfer.freezeWith(client);
+        const signedHbar = await frozenHbar.sign(operatorKey);
+        const hbarResponse = await signedHbar.execute(client);
+        const hbarReceipt = await hbarResponse.getReceipt(client);
+
+        hbarTxId = hbarResponse.transactionId.toString();
+        console.log(
+          `[Marketplace] HBAR payment completed — ${hbarAmount} HBAR to ${sellerHederaId}, status=${hbarReceipt.status}, txId=${hbarTxId}`
+        );
+      } catch (hbarErr) {
+        console.warn("[Marketplace] HBAR transfer failed (non-fatal):", hbarErr);
+      }
+    }
   } catch (mintErr) {
     console.warn("[Marketplace] CCR mint for purchase failed (non-fatal):", mintErr);
   }
@@ -265,13 +296,17 @@ export async function purchaseCredits(
         sellerId: seller.id,
         buyerDid: buyer.did ?? "",
         sellerDid: seller.did ?? "",
+        buyerHederaId: buyer.hederaAccountId ?? "",
+        sellerHederaId: seller.hederaAccountId ?? "",
         quantity: listing.quantity,
         pricePerCCR: listing.pricePerCCR,
         totalPriceCCR: totalPrice,
+        hbarAmount,
+        hbarTxId: hbarTxId || null,
         marketType: listing.marketType,
         listingId: listing.id,
         transactionId: transferTxId,
-        currency: "CCR",
+        currency: "CCR + HBAR",
       },
     });
   }
@@ -284,6 +319,8 @@ export async function purchaseCredits(
       sellerCompanyId: seller.id,
       quantity: listing.quantity,
       totalPrice,
+      hbarAmount,
+      hbarTxId: hbarTxId || null,
       transactionId: transferTxId,
     },
   });

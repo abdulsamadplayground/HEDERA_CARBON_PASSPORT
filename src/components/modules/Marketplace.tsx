@@ -32,6 +32,8 @@ interface Transaction {
   id: string;
   quantity: number;
   totalPrice: number;
+  hbarAmount?: number;
+  hbarTxId?: string | null;
   listingId: string;
   createdAt: string;
 }
@@ -125,7 +127,7 @@ export default function Marketplace() {
       method: "POST",
       body: { buyerCompanyId, listingId: listing.id },
       txType: "Credit Purchase",
-      txDescription: `Purchased ${listing.quantity} credits from ${listing.sellerCompanyName} for ${(listing.quantity * listing.pricePerCCR).toLocaleString()} CCR`,
+      txDescription: `Purchased ${listing.quantity} credits from ${listing.sellerCompanyName} for ${(listing.quantity * listing.pricePerCCR).toLocaleString()} CCR + ${(listing.quantity * listing.pricePerCCR * 0.5).toLocaleString()} HBAR`,
     });
     if (res.data) { setResult(res.data as Record<string, unknown>); fetchListings(); fetchHistory(buyerCompanyId); }
     setBuyingId(null);
@@ -138,7 +140,7 @@ export default function Marketplace() {
           <div style={iconBox}><Store size={18} color="#F59E0B" /></div>
           <div>
             <h3 style={heading}>Credit Marketplace</h3>
-            <p style={subtext}>Browse and purchase carbon credit surplus using CCR tokens</p>
+            <p style={subtext}>Browse and purchase carbon credits — CCR tokens + HBAR settlement on Hedera</p>
           </div>
         </div>
         <div style={{ display: "flex", gap: "0.35rem" }}>
@@ -234,6 +236,13 @@ export default function Marketplace() {
                       <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#F59E0B" }}>{totalCost.toLocaleString()} CCR</span>
                     </div>
 
+                    {/* HBAR equivalent */}
+                    <div style={{ ...totalRow, background: "linear-gradient(135deg, #EDE9FE, #F5F3FF)", borderRadius: 6, padding: "0.25rem 0.4rem", marginTop: "0.2rem" }}>
+                      <span style={{ fontSize: "0.65rem", color: "#7C3AED" }}>ℏ</span>
+                      <span style={{ fontSize: "0.72rem", color: "#7C3AED", fontWeight: 700 }}>{(totalCost * 0.5).toLocaleString()} HBAR</span>
+                      <span style={{ fontSize: "0.6rem", color: "#A78BFA" }}>(1 CCR = 0.5 ℏ)</span>
+                    </div>
+
                     {/* Seller */}
                     <div style={sellerRow}>
                       <span style={{ fontSize: "0.72rem", color: "#334155", fontWeight: 600 }}>{l.sellerCompanyName}</span>
@@ -257,7 +266,7 @@ export default function Marketplace() {
                       }}
                     >
                       <ShoppingCart size={13} />
-                      {buyingId === l.id ? "Buying..." : isOwn ? "Your Listing" : isSold ? "Sold" : !buyerCompanyId ? "Select Buyer" : `Buy for ${totalCost.toLocaleString()} CCR`}
+                      {buyingId === l.id ? "Buying..." : isOwn ? "Your Listing" : isSold ? "Sold" : !buyerCompanyId ? "Select Buyer" : `Buy · ${totalCost.toLocaleString()} CCR + ${(totalCost * 0.5).toLocaleString()} ℏ`}
                     </button>
                   </motion.div>
                 );
@@ -275,6 +284,12 @@ export default function Marketplace() {
                         <span style={{ fontWeight: 600, fontSize: "0.82rem", color: "#0F172A" }}>{h.quantity} CCR</span>
                         <span style={costBadge}>{(h.totalPrice ?? 0).toLocaleString()} CCR</span>
                       </div>
+                      {h.hbarAmount && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 2 }}>
+                          <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#7C3AED" }}>ℏ {h.hbarAmount.toLocaleString()} HBAR</span>
+                          {h.hbarTxId && <a href={`https://hashscan.io/testnet/transaction/${h.hbarTxId}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.6rem", color: "#3B82F6" }}>Verify ↗</a>}
+                        </div>
+                      )}
                       <span style={{ fontSize: "0.68rem", color: "#94A3B8" }}>{new Date(h.createdAt).toLocaleDateString()}</span>
                     </motion.div>
                   ))}
