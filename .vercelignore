@@ -1,0 +1,9 @@
+guardian/
+.kiro/
+scripts/
+docs/
+contracts/
+artifacts/
+cache/
+*.md
+!README.md
