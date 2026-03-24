@@ -68,52 +68,68 @@ function LoaderScreen({ progress }: { progress: number }) {
 function LogoShowcase() {
   return (
     <div style={showcaseShell}>
+      {/* Ambient glow — emerald center */}
+      <div style={glowCenter} />
       {/* Ambient light — bottom left emerald */}
       <div style={lightBL} />
       {/* Ambient light — top right blue */}
       <div style={lightTR} />
 
-      {/* Rotating + floating logo */}
-      <motion.div
-        style={{ transformStyle: "preserve-3d" as const, perspective: 800 }}
-        animate={{ rotateY: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
+      {/* Centered logo container — all elements positioned relative to this */}
+      <div style={logoAnchor}>
+        {/* Orbiting ring */}
         <motion.div
-          animate={{ y: [0, -14, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformStyle: "preserve-3d" as const }}
+          style={orbitRing}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >
-          <motion.div
-            initial={{ rotateX: 12 }}
-            style={{ filter: "drop-shadow(0 20px 40px rgba(16,185,129,0.25))" }}
-          >
-            <CarbonLogo size={260} />
-          </motion.div>
+          <div style={{ ...orbitDot, top: -4, left: "50%", marginLeft: -4 }} />
+          <div style={{ ...orbitDot, bottom: -4, left: "50%", marginLeft: -4, opacity: 0.4 }} />
+          <div style={{ ...orbitDot, left: -4, top: "50%", marginTop: -4, opacity: 0.6 }} />
         </motion.div>
-      </motion.div>
 
-      {/* Floor shadow */}
-      <div style={floorShadow} />
+        {/* Floating logo with gentle bob */}
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          style={logoCenter}
+        >
+          <CarbonLogo size={220} />
+        </motion.div>
 
-      {/* Sparkle particles */}
-      {[0, 1, 2, 3, 4].map(i => (
+        {/* Floor shadow — directly below logo */}
+        <motion.div
+          animate={{ scale: [1, 0.92, 1], opacity: [0.12, 0.08, 0.12] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          style={floorShadow}
+        />
+      </div>
+
+      {/* Sparkle particles — symmetric around center */}
+      {[
+        { x: -120, y: -100 },
+        { x: 110, y: -80 },
+        { x: -100, y: 80 },
+        { x: 120, y: 60 },
+        { x: 0, y: -130 },
+      ].map((pos, i) => (
         <motion.div
           key={i}
           style={{
             ...sparkle,
-            left: `${20 + i * 15}%`,
-            top: `${25 + (i % 3) * 20}%`,
+            left: "50%",
+            top: "50%",
+            marginLeft: pos.x,
+            marginTop: pos.y,
           }}
           animate={{
-            opacity: [0, 0.6, 0],
-            scale: [0.5, 1, 0.5],
-            y: [0, -20, 0],
+            opacity: [0, 0.7, 0],
+            scale: [0.4, 1.1, 0.4],
           }}
           transition={{
-            duration: 3 + i * 0.5,
+            duration: 3 + i * 0.4,
             repeat: Infinity,
-            delay: i * 0.8,
+            delay: i * 0.7,
             ease: "easeInOut",
           }}
         />
@@ -318,13 +334,26 @@ const showcaseShell: CSSProperties = {
   overflow: "hidden",
 };
 
+const glowCenter: CSSProperties = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 300,
+  height: 300,
+  background: "radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%)",
+  borderRadius: "50%",
+  filter: "blur(40px)",
+  pointerEvents: "none",
+};
+
 const lightBL: CSSProperties = {
   position: "absolute",
   bottom: 0,
   left: 0,
-  width: 380,
-  height: 380,
-  background: "radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%)",
+  width: 320,
+  height: 320,
+  background: "radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%)",
   borderRadius: "50%",
   filter: "blur(60px)",
   pointerEvents: "none",
@@ -334,22 +363,56 @@ const lightTR: CSSProperties = {
   position: "absolute",
   top: 0,
   right: 0,
-  width: 380,
-  height: 380,
-  background: "radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 70%)",
+  width: 320,
+  height: 320,
+  background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)",
   borderRadius: "50%",
   filter: "blur(60px)",
   pointerEvents: "none",
 };
 
+const logoAnchor: CSSProperties = {
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 280,
+  height: 280,
+};
+
+const logoCenter: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  filter: "drop-shadow(0 16px 32px rgba(16,185,129,0.2))",
+};
+
+const orbitRing: CSSProperties = {
+  position: "absolute",
+  inset: -20,
+  borderRadius: "50%",
+  border: "1px solid rgba(16,185,129,0.12)",
+};
+
+const orbitDot: CSSProperties = {
+  position: "absolute" as const,
+  width: 8,
+  height: 8,
+  borderRadius: "50%",
+  background: "rgba(16,185,129,0.5)",
+  boxShadow: "0 0 10px rgba(16,185,129,0.3)",
+};
+
 const floorShadow: CSSProperties = {
   position: "absolute",
-  bottom: "18%",
-  width: 160,
-  height: 20,
-  background: "rgba(0,0,0,0.1)",
+  bottom: -10,
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: 140,
+  height: 16,
+  background: "rgba(0,0,0,0.08)",
   borderRadius: "50%",
-  filter: "blur(16px)",
+  filter: "blur(12px)",
 };
 
 const sparkle: CSSProperties = {
@@ -357,7 +420,7 @@ const sparkle: CSSProperties = {
   width: 6,
   height: 6,
   borderRadius: "50%",
-  background: "rgba(255,255,255,0.8)",
+  background: "rgba(255,255,255,0.9)",
   boxShadow: "0 0 8px rgba(16,185,129,0.4)",
   pointerEvents: "none",
 };
