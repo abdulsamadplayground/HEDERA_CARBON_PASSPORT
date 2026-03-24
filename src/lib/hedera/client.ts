@@ -20,7 +20,7 @@ function validateEnvVars(): {
   privateKey: string;
   network: HederaNetwork;
 } {
-  const accountId = process.env.HEDERA_OPERATOR_ID;
+  const accountId = (process.env.HEDERA_OPERATOR_ID || "").trim();
   if (!accountId) {
     throw new Error(
       "Missing required environment variable HEDERA_OPERATOR_ID. " +
@@ -28,7 +28,7 @@ function validateEnvVars(): {
     );
   }
 
-  const privateKey = process.env.HEDERA_OPERATOR_KEY;
+  const privateKey = (process.env.HEDERA_OPERATOR_KEY || "").trim();
   if (!privateKey) {
     throw new Error(
       "Missing required environment variable HEDERA_OPERATOR_KEY. " +
@@ -36,7 +36,7 @@ function validateEnvVars(): {
     );
   }
 
-  const network = (process.env.HEDERA_NETWORK || "testnet") as string;
+  const network = (process.env.HEDERA_NETWORK || "testnet").trim() as string;
   if (!VALID_NETWORKS.includes(network as HederaNetwork)) {
     throw new Error(
       `Invalid HEDERA_NETWORK "${network}". Must be one of: ${VALID_NETWORKS.join(", ")}`

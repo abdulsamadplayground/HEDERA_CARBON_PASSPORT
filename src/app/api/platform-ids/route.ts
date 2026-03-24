@@ -40,8 +40,8 @@ export async function GET() {
     }
 
     return successResponse({
-      network: process.env.HEDERA_NETWORK || "testnet",
-      operatorId: process.env.HEDERA_OPERATOR_ID || null,
+      network: (process.env.HEDERA_NETWORK || "testnet").trim(),
+      operatorId: process.env.HEDERA_OPERATOR_ID?.trim() || null,
       tokens,
       topics,
       contracts,

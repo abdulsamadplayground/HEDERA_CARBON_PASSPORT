@@ -107,7 +107,7 @@ const RETRY_DELAY_MS = 1000;
  * Returns the configured Mirror Node base URL, stripping any trailing slash.
  */
 function getBaseUrl(): string {
-  const url = process.env.HEDERA_MIRROR_NODE_URL || DEFAULT_MIRROR_NODE_URL;
+  const url = (process.env.HEDERA_MIRROR_NODE_URL || DEFAULT_MIRROR_NODE_URL).trim();
   return url.replace(/\/+$/, "");
 }
 

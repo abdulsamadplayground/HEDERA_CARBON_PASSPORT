@@ -24,5 +24,5 @@ export function extractWalletCredentials(request: NextRequest): WalletCredential
 export function getCallerAccountId(request: NextRequest): string {
   const walletId = request.headers.get("x-hedera-account-id");
   if (walletId) return walletId;
-  return process.env.HEDERA_OPERATOR_ID || "";
+  return process.env.HEDERA_OPERATOR_ID?.trim() || "";
 }
