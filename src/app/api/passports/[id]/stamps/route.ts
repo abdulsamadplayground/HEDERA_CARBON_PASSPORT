@@ -21,8 +21,8 @@ export async function POST(
     const result = await issueStamp(id, input);
 
     // Check and distribute milestone rewards (FIRST_STAMP)
-    if (result.companyId) {
-      await checkAndDistributeRewards(result.companyId);
+    if (input.companyId) {
+      await checkAndDistributeRewards(input.companyId);
     }
 
     return successResponse(result, 201);
