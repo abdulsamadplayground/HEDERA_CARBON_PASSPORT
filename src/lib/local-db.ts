@@ -322,20 +322,24 @@ const EMPTY_DB: DatabaseSchema = {
 let db: DatabaseSchema | null = null;
 
 function ensureDir(): void {
-  if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
+  } catch {
+    // Read-only filesystem (Vercel) — skip directory creation
+  }
 }
 
 function load(): DatabaseSchema {
   if (db) return db;
-  ensureDir();
-  if (fs.existsSync(DB_FILE)) {
-    try {
+  try { ensureDir(); } catch { /* ignore */ }
+  try {
+    if (fs.existsSync(DB_FILE)) {
       const raw = fs.readFileSync(DB_FILE, "utf-8");
       db = { ...EMPTY_DB, ...JSON.parse(raw) };
-    } catch {
+    } else {
       db = { ...EMPTY_DB };
     }
-  } else {
+  } catch {
     db = { ...EMPTY_DB };
   }
   return db!;
@@ -343,8 +347,12 @@ function load(): DatabaseSchema {
 
 function save(): void {
   if (!db) return;
-  ensureDir();
-  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), "utf-8");
+  try {
+    ensureDir();
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), "utf-8");
+  } catch {
+    // Vercel serverless has read-only filesystem — data stays in-memory only
+  }
 }
 
 // ---------------------------------------------------------------------------
